@@ -39,6 +39,9 @@ chrlit              \'{valid_chr}\'
 invalid_chr         \'{inval_chr}*\'
 unterminated_chr    \'({valid_stuff}*|(\\.|[^'\n\\]))*\\?
 
+odd_number          [0-9]+(("_"|[0-9])*[0-9]+)?
+reallit							({odd_number}("e"|"E")("+"|"-")?{odd_number})|({odd_number}"."{odd_number}?(("e"|"E")("+"|"-")?{odd_number})?)|({odd_number}?"."{odd_number}(("e"|"E")("+"|"-")?{odd_number})?)
+
 empty              ("\n"|"\t"|" ")
 reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do|double|enum|extern|float|for|goto|inline|long|register|restrict|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|volatile)
 
@@ -164,6 +167,12 @@ return                          {
                                     print_with_content("CHRLIT", yytext);
 
                                 }
+
+{reallit}                       {
+                                    print_with_content("REALLIT",yytext);
+
+                                }
+
 {unterminated_chr}              {
                                     print_unterminated_error("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng));
                                 }
