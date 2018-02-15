@@ -23,42 +23,38 @@
 %}
 
 %option yylineno
+%X MULTICOMMENT
 %X COMMENT
 
-/* variables */
 id                  ([a-z]|[A-Z]|"_")+([a-z]|[A-Z]|"_"|[0-9])*
 intlit              [0-9]+
 
-valid_stuff         \\n|\\t|\\\\|\\\'|\\\"|(\\([0-7]{1,3}))
-invalid_stuff       \\.|\\[8-9]{1,3}
 
-valid_chr           ([^\n\'\\]|{valid_stuff})
-inval_chr           ([^'\n\\]|{invalid_stuff})
+escape              \\(\\|\"|\'|n|t|[0-7]{1,3})
+chrlit              '({escape}|[^'\n\\])'
+invalid_chr         '([^'\n\\]*|\\[^'\n]|\\')*'
+unterminated_chr    '([^'\n\\]?|\\[^'\n]|{escape})*\\?
 
-chrlit              \'{valid_chr}\'
-invalid_chr         \'{inval_chr}*\'
-unterminated_chr    \'({valid_stuff}*|(\\.|[^'\n\\]))*\\?
+exponent            [eE][+-]?[0-9]+
+reallit             [0-9]+"."([0-9]+)?({exponent})?|"."([0-9]+)({exponent})?|[0-9]+{exponent}
 
-odd_number          [0-9]+(("_"|[0-9])*[0-9]+)?
-reallit							({odd_number}("e"|"E")("+"|"-")?{odd_number})|({odd_number}"."{odd_number}?(("e"|"E")("+"|"-")?{odd_number})?)|({odd_number}?"."{odd_number}(("e"|"E")("+"|"-")?{odd_number})?)
-
-empty              ("\n"|"\t"|" ")
-reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do|double|enum|extern|float|for|goto|inline|long|register|restrict|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|volatile)
+empty               ("\n"|"\t"|" ")
+reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do|enum|extern|float|for|goto|inline|long|register|restrict|signed|sizeof|static|struct|switch|typedef|union|unsigned|volatile|_Bool|_Complex|_Imaginary)
 
 /* rules */
 %%
 
-"/*"                            {
-                                    BEGIN (COMMENT);
-                                    {
-                                        colComment = columnNumber - 1;
-                                    }
-                                    lineComment = yylineno;
-                                }
-<COMMENT>"*/"                   { BEGIN (0); }
-<COMMENT>"\n"                   { columnNumber = 1; }
-<COMMENT>.                      { ; }
-<COMMENT><<EOF>>                {
+"//"                            {BEGIN COMMENT;}
+<COMMENT>.                      {;}
+<COMMENT>"\n"                   {BEGIN 0;}
+
+
+
+"/*"                            {BEGIN MULTICOMMENT ;colComment = columnNumber - 1;lineComment = yylineno;}
+<MULTICOMMENT>"*/"              { BEGIN 0; }
+<MULTICOMMENT>"\n"              { columnNumber = 1;}
+<MULTICOMMENT>.                 { ; }
+<MULTICOMMENT><<EOF>>           {
                                     printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment);
                                     yyterminate();
                                 }
@@ -73,15 +69,27 @@ while                           {
                                     print_text("WHILE");
                                 }
 
+"&"                             {
+                                    print_text("BITWISEAND");
+                                }
+
 "&&"                            {
                                     print_text("AND");
                                 }
+
+"|"                             {
+                                    print_text("BITWISEOR");
+                                }
+
 "||"                            {
                                     print_text("OR");
                                 }
-"&"                             {
-                                    print_text("AMP");
+
+
+"^"                             {
+                                    print_text("BITWISEXOR");
                                 }
+
 "=="                            {
                                     print_text("EQ");
                                 }
@@ -131,7 +139,7 @@ while                           {
                                     print_text("MINUS");
                                 }
 "*"                             {
-                                    print_text("AST");
+                                    print_text("MUL");
                                 }
 "/"                             {
                                     print_text("DIV");
@@ -151,6 +159,15 @@ void                            {
 if                              {
                                     print_text("IF");
                                 }
+
+short                           {
+                                    print_text("SHORT");
+                                }
+
+double                          {
+                                    print_text("DOUBLE");
+                                }
+
 else                            {
                                     print_text("ELSE");
                                 }
@@ -170,19 +187,18 @@ return                          {
 
 {reallit}                       {
                                     print_with_content("REALLIT",yytext);
-
                                 }
 
 {unterminated_chr}              {
-                                    print_unterminated_error("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng));
+                                    printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng));
                                 }
 {invalid_chr}                   {
-                                    print_invalid_error("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
+                                    printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
 
 {empty}                        { ; }
 .                               {
-                                    print_invalid_error("Line %d, col %d: illegal character (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
+                                    printf("Line %d, col %d: illegal character (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
 
 %%
@@ -201,13 +217,6 @@ void print_with_content(char* text, char* content) {
     }
 }
 
-void print_unterminated_error(char* error, int line, int col) {
-    printf(error, line, col);
-}
-
-void print_invalid_error(char* error, int line, int col, char* token) {
-    printf(error, line, col, token);
-}
 
 int yywrap() {
     return 1;
