@@ -18,8 +18,6 @@
 
     void print_text(char* text);
     void print_with_content(char* text, char* content);
-    void print_unterminated_error(char* error, int line, int col);
-    void print_invalid_error(char* error, int line, int col, char* token);
 %}
 
 %option yylineno
@@ -46,11 +44,11 @@ reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do
 
 "//"                            {BEGIN COMMENT;}
 <COMMENT>.                      {;}
-<COMMENT>"\n"                   {BEGIN 0;}
+<COMMENT>"\n"                   {BEGIN 0;columnNumber = 1;}
 
 
 
-"/*"                            {BEGIN MULTICOMMENT ;colComment = columnNumber - 1;lineComment = yylineno;}
+"/*"                            {BEGIN MULTICOMMENT ;colComment = columnNumber-2 ;lineComment = yylineno;}
 <MULTICOMMENT>"*/"              { BEGIN 0; }
 <MULTICOMMENT>"\n"              { columnNumber = 1;}
 <MULTICOMMENT>.                 { ; }
@@ -59,7 +57,7 @@ reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do
                                     yyterminate();
                                 }
 
-"\n"                            { columnNumber = 1; }
+"\n"|"\r"|"\r\n"                { columnNumber = 1;}
 
 {reserved}                      {
                                     print_with_content("RESERVED", yytext);
@@ -196,7 +194,9 @@ return                          {
                                     printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
 
-{empty}                        { ; }
+{empty}                        {;}
+
+
 .                               {
                                     printf("Line %d, col %d: illegal character (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
@@ -216,7 +216,6 @@ void print_with_content(char* text, char* content) {
         printf("%s(%s)\n", text, content);
     }
 }
-
 
 int yywrap() {
     return 1;
