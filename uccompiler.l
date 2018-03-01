@@ -5,17 +5,20 @@
     #include <stdlib.h>
     #include <string.h>
     #include <stdbool.h>
+    #include "y.tab.h"
+    #include "ast.h"
+
 
     int flag = 0;
     int lineNumber = 1;
     int columnNumber = 1;
     int colComment;
     int lineComment;
+    extern int flag_error;
+    extern tree_node* root;
 
     int yyparse();
-
     bool check_flag();
-
     void print_text(char* text);
     void print_with_content(char* text, char* content);
 %}
@@ -232,6 +235,14 @@ int main(int argc, char const *argv[])
             flag = 1;
         }
     }
-    yylex();
+    if (check_flag()) {
+        yyparse();
+
+        if(flag == 3 && flag_error == 0) {
+            print_tree(root, 0);
+        }
+    } else {
+        yylex();
+    }
     return 0;
 }

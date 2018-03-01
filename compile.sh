@@ -1,4 +1,4 @@
 lex uccompiler.l
-clang-3.8 -o uccompiler lex.yy.c
-rm uccompiler.zip
-zip uccompiler.zip uccompiler.l
+yacc -d uccompiler.y
+cc -o uccompiler y.tab.c lex.yy.c ast.c  -ll -ly
+zip uccompiler.zip uccompiler.l uccompiler.y ast.h ast.c

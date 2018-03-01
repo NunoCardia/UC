@@ -1,7 +1,0 @@
-Grupo: AAteam
-Nome1: André Monteiro do Rosário Almeida
-Numero1: 2013152895
-Email1: amdra@student.dei.uc.pt
-Nome2: Angélica Santos Carvalho
-Numero2: 2014191840
-Email2: asc@student.dei.uc.pt
