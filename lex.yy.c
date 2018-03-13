@@ -1077,278 +1077,320 @@ YY_RULE_SETUP
 #line 65 "uccompiler.l"
 {
                                     print_with_content("RESERVED", yytext);
+                                    if( check_flag() ) { return RESERVED; }
                                 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 69 "uccompiler.l"
+#line 70 "uccompiler.l"
 {
                                     print_text("WHILE");
+                                    if( check_flag() ) { return WHILE; }
                                 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 73 "uccompiler.l"
+#line 75 "uccompiler.l"
 {
                                     print_text("BITWISEAND");
+                                    if( check_flag() ) { return BITWISEAND; }
                                 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 77 "uccompiler.l"
+#line 80 "uccompiler.l"
 {
                                     print_text("AND");
+                                    if( check_flag() ) { return AND; }
                                 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 81 "uccompiler.l"
+#line 85 "uccompiler.l"
 {
                                     print_text("BITWISEOR");
+                                    if( check_flag() ) { return BITWISEOR; }
                                 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 85 "uccompiler.l"
+#line 90 "uccompiler.l"
 {
                                     print_text("OR");
+                                    if( check_flag() ) { return OR; }
                                 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 90 "uccompiler.l"
+#line 96 "uccompiler.l"
 {
                                     print_text("BITWISEXOR");
+                                    if( check_flag() ) { return BITWISEXOR; }
                                 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 94 "uccompiler.l"
+#line 101 "uccompiler.l"
 {
                                     print_text("EQ");
+                                    if( check_flag() ) { return EQ; }
                                 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 97 "uccompiler.l"
+#line 105 "uccompiler.l"
 {
                                     print_text("ASSIGN");
+                                    if( check_flag() ) { return ASSIGN; }
                                 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 100 "uccompiler.l"
+#line 109 "uccompiler.l"
 {
                                     print_text("NOT");
+                                    if( check_flag() ) { return NOT; }
                                 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 103 "uccompiler.l"
+#line 113 "uccompiler.l"
 {
                                     print_text("NE");
+                                    if( check_flag() ) { return NE; }
                                 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 106 "uccompiler.l"
+#line 117 "uccompiler.l"
 {
                                     print_text("GT");
+                                    if( check_flag() ) { return GT; }
                                 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 109 "uccompiler.l"
+#line 121 "uccompiler.l"
 {
                                     print_text("LT");
+                                    if( check_flag() ) { return LT; }
                                 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 112 "uccompiler.l"
+#line 125 "uccompiler.l"
 {
                                     print_text("GE");
+                                    if( check_flag() ) { return GE; }
                                 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 115 "uccompiler.l"
+#line 129 "uccompiler.l"
 {
                                     print_text("LE");
+                                    if( check_flag() ) { return LE; }
                                 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 118 "uccompiler.l"
+#line 133 "uccompiler.l"
 {
                                     print_text("COMMA");
+                                    if( check_flag() ) { return COMMA; }
                                 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 121 "uccompiler.l"
+#line 137 "uccompiler.l"
 {
                                     print_text("SEMI");
+                                    if( check_flag() ) { return SEMI; }
                                 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 124 "uccompiler.l"
+#line 141 "uccompiler.l"
 {
                                     print_text("LBRACE");
+                                    if( check_flag() ) { return LBRACE; }
                                 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 127 "uccompiler.l"
+#line 145 "uccompiler.l"
 {
                                     print_text("RBRACE");
+                                    if( check_flag() ) { return RBRACE; }
                                 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 130 "uccompiler.l"
+#line 149 "uccompiler.l"
 {
                                     print_text("LPAR");
+                                    if( check_flag() ) { return LPAR; }
                                 }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 133 "uccompiler.l"
+#line 153 "uccompiler.l"
 {
                                     print_text("RPAR");
+                                    if( check_flag() ) { return RPAR; }
                                 }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 136 "uccompiler.l"
+#line 157 "uccompiler.l"
 {
                                     print_text("PLUS");
+                                    if( check_flag() ) { return PLUS; }
                                 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 139 "uccompiler.l"
+#line 161 "uccompiler.l"
 {
                                     print_text("MINUS");
+                                    if( check_flag() ) { return MINUS; }
                                 }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 142 "uccompiler.l"
+#line 165 "uccompiler.l"
 {
                                     print_text("MUL");
+                                    if( check_flag() ) { return MUL; }
                                 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 145 "uccompiler.l"
+#line 169 "uccompiler.l"
 {
                                     print_text("DIV");
+                                    if( check_flag() ) { return DIV; }
                                 }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 148 "uccompiler.l"
+#line 173 "uccompiler.l"
 {
                                     print_text("MOD");
+                                    if( check_flag() ) { return MOD; }
                                 }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 151 "uccompiler.l"
+#line 177 "uccompiler.l"
 {
                                     print_text("INT");
+                                    if( check_flag() ) { return INT; }
                                 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 154 "uccompiler.l"
+#line 181 "uccompiler.l"
 {
                                     print_text("CHAR");
+                                    if( check_flag() ) { return CHAR; }
                                 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 157 "uccompiler.l"
+#line 185 "uccompiler.l"
 {
                                     print_text("VOID");
+                                    if( check_flag() ) { return VOID; }
                                 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 160 "uccompiler.l"
+#line 189 "uccompiler.l"
 {
                                     print_text("IF");
+                                    if( check_flag() ) { return IF; }
                                 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 164 "uccompiler.l"
+#line 194 "uccompiler.l"
 {
                                     print_text("SHORT");
+                                    if( check_flag() ) { return SHORT; }
                                 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 168 "uccompiler.l"
+#line 199 "uccompiler.l"
 {
                                     print_text("DOUBLE");
+                                    if( check_flag() ) { return DOUBLE; }
                                 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 172 "uccompiler.l"
+#line 204 "uccompiler.l"
 {
                                     print_text("ELSE");
+                                    if( check_flag() ) { return ELSE; }
                                 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 175 "uccompiler.l"
+#line 208 "uccompiler.l"
 {
                                     print_text("RETURN");
+                                    if( check_flag() ) { return RETURN; }
                                 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 178 "uccompiler.l"
+#line 212 "uccompiler.l"
 {
                                     print_with_content("ID", yytext);
+                                    yylval.id = strdup(yytext);
+                                    if( check_flag() ) { return ID; }
                                 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 181 "uccompiler.l"
+#line 217 "uccompiler.l"
 {
                                     print_with_content("INTLIT", yytext);
+                                    yylval.intlit = strdup(yytext);
+                                    if( check_flag() ) { return INTLIT; }
                                 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 184 "uccompiler.l"
+#line 222 "uccompiler.l"
 {
                                     print_with_content("CHRLIT", yytext);
+                                    yylval.chrlit = strdup(yytext);
+                                    if( check_flag() ) { return CHRLIT; }
 
                                 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 189 "uccompiler.l"
+#line 229 "uccompiler.l"
 {
                                     print_with_content("REALLIT",yytext);
+                                    yylval.reallit = strdup(yytext);
+                                    if( check_flag() ) { return REALLIT; }
                                 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 193 "uccompiler.l"
+#line 235 "uccompiler.l"
 {
                                     printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng));
                                 }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 196 "uccompiler.l"
+#line 238 "uccompiler.l"
 {
                                     printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
@@ -1356,22 +1398,22 @@ YY_RULE_SETUP
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
-#line 200 "uccompiler.l"
+#line 242 "uccompiler.l"
 {;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 203 "uccompiler.l"
+#line 245 "uccompiler.l"
 {
                                     printf("Line %d, col %d: illegal character (%s)\n", yylineno, (int)(columnNumber-yyleng), yytext);
                                 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 207 "uccompiler.l"
+#line 249 "uccompiler.l"
 ECHO;
 	YY_BREAK
-#line 1375 "lex.yy.c"
+#line 1417 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -2381,7 +2423,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 207 "uccompiler.l"
+#line 249 "uccompiler.l"
 
 
 
@@ -2420,6 +2462,7 @@ int main(int argc, char const *argv[])
         if(flag == 3 && flag_error == 0) {
             print_tree(root, 0);
         }
+        yylex();
     } else {
         yylex();
     }

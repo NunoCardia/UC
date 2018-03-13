@@ -64,130 +64,172 @@ reserved            ("["|"]"|"--"|"++"|auto|break|case|const|continue|default|do
 
 {reserved}                      {
                                     print_with_content("RESERVED", yytext);
+                                    if( check_flag() ) { return RESERVED; }
                                 }
 
 while                           {
                                     print_text("WHILE");
+                                    if( check_flag() ) { return WHILE; }
                                 }
 
 "&"                             {
                                     print_text("BITWISEAND");
+                                    if( check_flag() ) { return BITWISEAND; }
                                 }
 
 "&&"                            {
                                     print_text("AND");
+                                    if( check_flag() ) { return AND; }
                                 }
 
 "|"                             {
                                     print_text("BITWISEOR");
+                                    if( check_flag() ) { return BITWISEOR; }
                                 }
 
 "||"                            {
                                     print_text("OR");
+                                    if( check_flag() ) { return OR; }
                                 }
 
 
 "^"                             {
                                     print_text("BITWISEXOR");
+                                    if( check_flag() ) { return BITWISEXOR; }
                                 }
 
 "=="                            {
                                     print_text("EQ");
+                                    if( check_flag() ) { return EQ; }
                                 }
 "="                             {
                                     print_text("ASSIGN");
+                                    if( check_flag() ) { return ASSIGN; }
                                 }
 "!"                             {
                                     print_text("NOT");
+                                    if( check_flag() ) { return NOT; }
                                 }
 "!="                            {
                                     print_text("NE");
+                                    if( check_flag() ) { return NE; }
                                 }
 ">"                             {
                                     print_text("GT");
+                                    if( check_flag() ) { return GT; }
                                 }
 "<"                             {
                                     print_text("LT");
+                                    if( check_flag() ) { return LT; }
                                 }
 ">="                            {
                                     print_text("GE");
+                                    if( check_flag() ) { return GE; }
                                 }
 "<="                            {
                                     print_text("LE");
+                                    if( check_flag() ) { return LE; }
                                 }
 ","                             {
                                     print_text("COMMA");
+                                    if( check_flag() ) { return COMMA; }
                                 }
 ";"                             {
                                     print_text("SEMI");
+                                    if( check_flag() ) { return SEMI; }
                                 }
 "{"                             {
                                     print_text("LBRACE");
+                                    if( check_flag() ) { return LBRACE; }
                                 }
 "}"                             {
                                     print_text("RBRACE");
+                                    if( check_flag() ) { return RBRACE; }
                                 }
 "("                             {
                                     print_text("LPAR");
+                                    if( check_flag() ) { return LPAR; }
                                 }
 ")"                             {
                                     print_text("RPAR");
+                                    if( check_flag() ) { return RPAR; }
                                 }
 "+"                             {
                                     print_text("PLUS");
+                                    if( check_flag() ) { return PLUS; }
                                 }
 "-"                             {
                                     print_text("MINUS");
+                                    if( check_flag() ) { return MINUS; }
                                 }
 "*"                             {
                                     print_text("MUL");
+                                    if( check_flag() ) { return MUL; }
                                 }
 "/"                             {
                                     print_text("DIV");
+                                    if( check_flag() ) { return DIV; }
                                 }
 "%"                             {
                                     print_text("MOD");
+                                    if( check_flag() ) { return MOD; }
                                 }
 int                             {
                                     print_text("INT");
+                                    if( check_flag() ) { return INT; }
                                 }
 char                            {
                                     print_text("CHAR");
+                                    if( check_flag() ) { return CHAR; }
                                 }
 void                            {
                                     print_text("VOID");
+                                    if( check_flag() ) { return VOID; }
                                 }
 if                              {
                                     print_text("IF");
+                                    if( check_flag() ) { return IF; }
                                 }
 
 short                           {
                                     print_text("SHORT");
+                                    if( check_flag() ) { return SHORT; }
                                 }
 
 double                          {
                                     print_text("DOUBLE");
+                                    if( check_flag() ) { return DOUBLE; }
                                 }
 
 else                            {
                                     print_text("ELSE");
+                                    if( check_flag() ) { return ELSE; }
                                 }
 return                          {
                                     print_text("RETURN");
+                                    if( check_flag() ) { return RETURN; }
                                 }
 {id}                            {
                                     print_with_content("ID", yytext);
+                                    yylval.id = strdup(yytext);
+                                    if( check_flag() ) { return ID; }
                                 }
 {intlit}                        {
                                     print_with_content("INTLIT", yytext);
+                                    yylval.intlit = strdup(yytext);
+                                    if( check_flag() ) { return INTLIT; }
                                 }
 {chrlit}                        {
                                     print_with_content("CHRLIT", yytext);
+                                    yylval.chrlit = strdup(yytext);
+                                    if( check_flag() ) { return CHRLIT; }
 
                                 }
 
 {reallit}                       {
                                     print_with_content("REALLIT",yytext);
+                                    yylval.reallit = strdup(yytext);
+                                    if( check_flag() ) { return REALLIT; }
                                 }
 
 {unterminated_chr}              {
@@ -241,6 +283,7 @@ int main(int argc, char const *argv[])
         if(flag == 3 && flag_error == 0) {
             print_tree(root, 0);
         }
+        yylex();
     } else {
         yylex();
     }

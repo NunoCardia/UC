@@ -45,102 +45,92 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    RESERVED = 258,
-    WHILE = 259,
-    BITWISEAND = 260,
+    BITWISEAND = 258,
+    BITWISEOR = 259,
+    BITWISEXOR = 260,
     AND = 261,
-    BITWISEOR = 262,
-    OR = 263,
-    BITWISEXOR = 264,
-    EQ = 265,
-    ASSIGN = 266,
-    NOT = 267,
-    NE = 268,
-    GT = 269,
-    LT = 270,
-    GE = 271,
-    LE = 272,
-    COMMA = 273,
-    SEMI = 274,
-    LBRACE = 275,
-    RBRACE = 276,
-    LPAR = 277,
-    RPAR = 278,
-    PLUS = 279,
-    MINUS = 280,
-    MUL = 281,
-    DIV = 282,
-    MOD = 283,
-    INT = 284,
-    CHAR = 285,
-    VOID = 286,
-    IF = 287,
-    SHORT = 288,
-    DOUBLE = 289,
-    ELSE = 290,
-    RETURN = 291,
+    OR = 262,
+    EQ = 263,
+    ASSIGN = 264,
+    NOT = 265,
+    NE = 266,
+    GT = 267,
+    LT = 268,
+    GE = 269,
+    LE = 270,
+    COMMA = 271,
+    SEMI = 272,
+    LBRACE = 273,
+    RBRACE = 274,
+    LPAR = 275,
+    RPAR = 276,
+    PLUS = 277,
+    MINUS = 278,
+    MUL = 279,
+    DIV = 280,
+    MOD = 281,
+    INT = 282,
+    CHAR = 283,
+    VOID = 284,
+    IF = 285,
+    ELSE = 286,
+    RETURN = 287,
+    RESERVED = 288,
+    SHORT = 289,
+    DOUBLE = 290,
+    WHILE = 291,
     ID = 292,
     INTLIT = 293,
     CHRLIT = 294,
-    REALLIT = 295,
-    AST = 297,
-    AMP = 301,
-    LSQ = 302,
-    RSQ = 303,
-    expression = 304
+    REALLIT = 295
   };
 #endif
 /* Tokens.  */
-#define RESERVED 258
-#define WHILE 259
-#define BITWISEAND 260
+#define BITWISEAND 258
+#define BITWISEOR 259
+#define BITWISEXOR 260
 #define AND 261
-#define BITWISEOR 262
-#define OR 263
-#define BITWISEXOR 264
-#define EQ 265
-#define ASSIGN 266
-#define NOT 267
-#define NE 268
-#define GT 269
-#define LT 270
-#define GE 271
-#define LE 272
-#define COMMA 273
-#define SEMI 274
-#define LBRACE 275
-#define RBRACE 276
-#define LPAR 277
-#define RPAR 278
-#define PLUS 279
-#define MINUS 280
-#define MUL 281
-#define DIV 282
-#define MOD 283
-#define INT 284
-#define CHAR 285
-#define VOID 286
-#define IF 287
-#define SHORT 288
-#define DOUBLE 289
-#define ELSE 290
-#define RETURN 291
+#define OR 262
+#define EQ 263
+#define ASSIGN 264
+#define NOT 265
+#define NE 266
+#define GT 267
+#define LT 268
+#define GE 269
+#define LE 270
+#define COMMA 271
+#define SEMI 272
+#define LBRACE 273
+#define RBRACE 274
+#define LPAR 275
+#define RPAR 276
+#define PLUS 277
+#define MINUS 278
+#define MUL 279
+#define DIV 280
+#define MOD 281
+#define INT 282
+#define CHAR 283
+#define VOID 284
+#define IF 285
+#define ELSE 286
+#define RETURN 287
+#define RESERVED 288
+#define SHORT 289
+#define DOUBLE 290
+#define WHILE 291
 #define ID 292
 #define INTLIT 293
 #define CHRLIT 294
 #define REALLIT 295
-#define AST 297
-#define AMP 301
-#define LSQ 302
-#define RSQ 303
-#define expression 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 59 "uccompiler.y" /* yacc.c:1915  */
+#line 91 "uccompiler.y" /* yacc.c:1915  */
 
     char*   id;
     char*   intlit;
@@ -148,7 +138,7 @@ union YYSTYPE
     char*   reallit;
     struct _tree_node* node;
 
-#line 152 "y.tab.h" /* yacc.c:1915  */
+#line 142 "y.tab.h" /* yacc.c:1915  */
 };
 
 typedef union YYSTYPE YYSTYPE;
