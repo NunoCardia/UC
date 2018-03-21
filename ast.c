@@ -2,6 +2,7 @@
 #include "ast.h"
 
 tree_node* create_simple_node(char* name) {
+
     tree_node* new_node = (tree_node*) malloc( sizeof(tree_node) );
 
     if (new_node != NULL) {
@@ -44,7 +45,7 @@ void add_child(tree_node * father , tree_node * son){
     }
 }
 
-void add_brother_end(tree_node* brother, tree_node* new_son) {
+void add_brother(tree_node* brother, tree_node* new_son) {
     tree_node* aux = brother;
     if(aux!= NULL && new_son != NULL) {
         while(aux->next_brother != NULL) {
@@ -71,7 +72,7 @@ void print_tree(tree_node* node, int level){
     if(node != NULL) {
         print_points(level);
 
-        if(strcmp(node->name, "Id") == 0 || strcmp(node->name, "Chrlit") == 0 || strcmp(node->name, "Reallit") == 0 || strcmp(node->name, "Intlit") == 0){
+        if(strcmp(node->name, "Id") == 0 || strcmp(node->name, "ChrLit") == 0 || strcmp(node->name, "RealLit") == 0 || strcmp(node->name, "IntLit") == 0){
             print_terminal(node);
         } else {
             printf("%s\n", node->name);

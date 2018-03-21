@@ -1,6 +1,7 @@
 %{
-    #define YY_USER_ACTION columnNumber += yyleng;
 
+    //NUNO FERREIRA 2013153319
+    #define YY_USER_ACTION columnNumber += yyleng;
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -275,15 +276,16 @@ int main(int argc, char const *argv[])
     if (argc > 1) {
         if (strcmp(argv[1], "-l") == 0) {
             flag = 1;
+        }else if(strcmp(argv[1], "-t") == 0) {
+            flag = 3;
         }
     }
     if (check_flag()) {
         yyparse();
-
         if(flag == 3 && flag_error == 0) {
             print_tree(root, 0);
         }
-        yylex();
+
     } else {
         yylex();
     }
