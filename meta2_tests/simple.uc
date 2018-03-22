@@ -1,12 +1,5 @@
 int main(void) {
-	char i = 'A';
-	while (i <= 'Z') {
-		putchar(i);
-		i = i + 1;
-	}
-	while (i <= 'Z') {
-		putchar(i);
-		i = i + 1;
-	}
-	return 0;
+	while (i <= 'Z');
+	while (1,2){};
+	while (1 < 2) {};
 }

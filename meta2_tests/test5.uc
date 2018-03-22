@@ -14,6 +14,5 @@ int main(void){
     n = a;
     p = bla(b, c, z);
     q = b < c % 20 * c - a + q - aass(b == c + p);
-
-
+    a,b,c = 0;
 }

@@ -19,5 +19,6 @@ Program
 ........Store
 ..........Id(b)
 ..........IntLit(5)
+........Null
 ......Return
 ........IntLit(0)

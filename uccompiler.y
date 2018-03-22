@@ -112,6 +112,7 @@
 %left GE LE GT LT
 %left PLUS MINUS
 %left MUL DIV MOD
+%nonassoc "pos" "neg"
 %right NOT
 %left LPAR RPAR LBRACE RBRACE
 %nonassoc ELSE
@@ -203,6 +204,9 @@ FandD:  StatementSpecial FandD                                                  
                                                                                   if($1 != NULL) {
                                                                                         add_brother($1, $2);
                                                                                   }
+                                                                                  else{
+                                                                                        $$ = $2;
+                                                                                    }
                                                                                 }
       | Declaration FandD                                                       {
                                                                                   $$ = $1;
@@ -337,16 +341,17 @@ StatementSpecial:   ZUExpr SEMI                                                 
                                                                                     }
                                                                                 }
         |           WHILE LPAR Expr RPAR Statement                              {
+                                                                                    $$ = create_simple_node("While");
                                                                                     if($3 != NULL) {
-                                                                                        $$ = create_simple_node("While");
-                                                                                        add_child($$,$3);
-                                                                                        if($5 != NULL) {
-                                                                                            add_brother($3,$5);
-                                                                                        }else {
-                                                                                            add_brother($3,create_simple_node("Null"));
-                                                                                        }
+                                                                                      add_child($$,$3);
                                                                                     } else {
-                                                                                        $$ = NULL;
+                                                                                      auxNull = create_simple_node("Null");
+                                                                                      add_child($$,auxNull);
+                                                                                    }
+                                                                                    if($5 != NULL) {
+                                                                                        add_brother($$->son,$5);
+                                                                                    }else {
+                                                                                        add_brother($$->son,create_simple_node("Null"));
                                                                                     }
                                                                                 }
 
@@ -508,11 +513,11 @@ ExprSpecial:    ExprSpecial ASSIGN ExprSpecial                                  
                                                                                   $$ = create_simple_node("Not");
                                                                                   add_child($$,$2);
                                                                                 }
-        |       MINUS ExprSpecial                                               {
+        |       MINUS ExprSpecial  %prec "neg"                                  {
                                                                                   $$ = create_simple_node("Minus");
                                                                                   add_child($$,$2);
                                                                                 }
-        |       PLUS ExprSpecial                                                {
+        |       PLUS ExprSpecial  %prec "pos"                                   {
                                                                                   $$ = create_simple_node("Plus");
                                                                                   add_child($$,$2);
                                                                                 }
@@ -548,7 +553,7 @@ ZUid:   Empty                                                                   
     |   ID                                                                      {$$ = create_value_node("Id",$1);}
     ;
 
-ZUExpr: Empty                                                                   {$$ = $1;}
+ZUExpr: Empty                                                                   {$$ = NULL;}
     |   Expr                                                                    {$$ = $1;}
     ;
 
