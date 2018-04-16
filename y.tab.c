@@ -1482,7 +1482,7 @@ yyreduce:
         case 2:
 #line 122 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("Program");
+                                                                                    (yyval.node) = create_simple_node("Program",yylineno,(int)(columnNumber));
                                                                                     root = (yyval.node);
                                                                                     if((yyvsp[-1].node) != NULL) {
                                                                                         add_child((yyval.node), (yyvsp[-1].node));
@@ -1495,7 +1495,7 @@ yyreduce:
   case 3:
 #line 130 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("Program");
+                                                                                    (yyval.node) = create_simple_node("Program", yylineno, (int)(columnNumber));
                                                                                     root = (yyval.node);
                                                                                     if((yyvsp[-1].node) != NULL) {
                                                                                         add_child((yyval.node), (yyvsp[-1].node));
@@ -1508,7 +1508,7 @@ yyreduce:
   case 4:
 #line 138 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("Program");
+                                                                                    (yyval.node) = create_simple_node("Program", yylineno, (int)(columnNumber));
                                                                                     root = (yyval.node);
                                                                                     if((yyvsp[-1].node) != NULL) {
                                                                                         add_child((yyval.node), (yyvsp[-1].node));
@@ -1560,7 +1560,7 @@ yyreduce:
   case 9:
 #line 170 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("FuncDefinition");
+                                                                                    (yyval.node) = create_simple_node("FuncDefinition", yylineno, (int)(columnNumber));
                                                                                     add_child((yyval.node), (yyvsp[-2].node));
                                                                                     add_brother((yyvsp[-2].node),(yyvsp[-1].node));
                                                                                     add_brother((yyvsp[-2].node),(yyvsp[0].node));
@@ -1571,7 +1571,7 @@ yyreduce:
   case 10:
 #line 179 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("FuncDeclaration");
+                                                                                    (yyval.node) = create_simple_node("FuncDeclaration", yylineno, (int)(columnNumber));
                                                                                     add_child((yyval.node), (yyvsp[-2].node));
                                                                                     add_brother((yyval.node)->son,(yyvsp[-1].node));
                                                                                 }
@@ -1581,7 +1581,7 @@ yyreduce:
   case 11:
 #line 187 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_value_node("Id", (yyvsp[-3].id));
+                                                                                  (yyval.node) = create_value_node("Id", (yyvsp[-3].id), yylineno, (int)((yyvsp[-1].node)->col - strlen((yyvsp[-3].id))));
                                                                                   add_brother((yyval.node), (yyvsp[-1].node));
                                                                                 }
 #line 1588 "y.tab.c" /* yacc.c:1661  */
@@ -1590,7 +1590,7 @@ yyreduce:
   case 12:
 #line 194 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("FuncBody");
+                                                                                    (yyval.node) = create_simple_node("FuncBody", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-1].node) != NULL){
                                                                                       add_child((yyval.node),(yyvsp[-1].node));
                                                                                     }
@@ -1632,7 +1632,7 @@ yyreduce:
   case 16:
 #line 221 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("ParamList");
+                                                                                    (yyval.node) = create_simple_node("ParamList", yylineno, (int)((yyvsp[-1].node)->col - 1));
                                                                                     add_child((yyval.node),(yyvsp[-1].node));
                                                                                     add_brother((yyvsp[-1].node),(yyvsp[0].node));
                                                                                 }
@@ -1642,7 +1642,7 @@ yyreduce:
   case 17:
 #line 229 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("ParamDeclaration");
+                                                                                    (yyval.node) = create_simple_node("ParamDeclaration", yylineno, (int)(columnNumber - (columnNumber - (yyvsp[-1].node)->col)));
                                                                                     add_child((yyval.node),(yyvsp[-1].node));
                                                                                     add_brother((yyvsp[-1].node),(yyvsp[0].node));
                                                                                 }
@@ -1693,39 +1693,39 @@ yyreduce:
 
   case 22:
 #line 266 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_simple_node("Int");}
+    { (yyval.node) = create_simple_node("Int", yylineno, (int)(columnNumber - 3));}
 #line 1698 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 23:
 #line 267 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_simple_node("Char");}
+    { (yyval.node) = create_simple_node("Char", yylineno, (int)(columnNumber - 4));}
 #line 1704 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 24:
 #line 268 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_simple_node("Void");}
+    { (yyval.node) = create_simple_node("Void", yylineno, (int)(columnNumber - 4));}
 #line 1710 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 25:
 #line 269 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_simple_node("Short");}
+    { (yyval.node) = create_simple_node("Short", yylineno, (int)(columnNumber - 5));}
 #line 1716 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 26:
 #line 270 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_simple_node("Double");}
+    { (yyval.node) = create_simple_node("Double", yylineno, (int)(columnNumber - 6));}
 #line 1722 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 27:
 #line 274 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Declaration");
-                                                                                  auxId = create_value_node("Id",(yyvsp[-1].id));
+                                                                                  (yyval.node) = create_simple_node("Declaration", yylineno, (int)(columnNumber));
+                                                                                  auxId = create_value_node("Id",(yyvsp[-1].id), yylineno, (int)(columnNumber - strlen((yyvsp[-1].id)) - 1));
                                                                                   if((yyvsp[0].node) != NULL){
                                                                                     add_child((yyval.node),auxId);
                                                                                     add_brother((yyval.node)->son,(yyvsp[0].node));
@@ -1811,15 +1811,15 @@ yyreduce:
 #line 309 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                       if((yyvsp[-2].node) != NULL) {
-                                                                                          (yyval.node) = create_simple_node("If");
+                                                                                          (yyval.node) = create_simple_node("If", yylineno, (int)(columnNumber));
 
                                                                                           add_child((yyval.node),(yyvsp[-2].node));
                                                                                           if((yyvsp[0].node) != NULL) {
                                                                                               add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                           }else {
-                                                                                              add_brother((yyvsp[-2].node),create_simple_node("Null"));
+                                                                                              add_brother((yyvsp[-2].node),create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                           }
-                                                                                          add_brother((yyvsp[-2].node),create_simple_node("Null"));
+                                                                                          add_brother((yyvsp[-2].node),create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                       } else {
                                                                                           (yyval.node) = NULL;
                                                                                       }
@@ -1831,18 +1831,18 @@ yyreduce:
 #line 324 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     if( (yyvsp[-4].node) != NULL ) {
-                                                                                        (yyval.node) = create_simple_node("If");
+                                                                                        (yyval.node) = create_simple_node("If", yylineno, (int)(columnNumber));
                                                                                         add_child((yyval.node), (yyvsp[-4].node));
                                                                                         if((yyvsp[-2].node) != NULL) {
                                                                                             add_brother((yyvsp[-4].node),(yyvsp[-2].node));
                                                                                         }else {
-                                                                                            add_brother((yyvsp[-4].node),create_simple_node("Null"));
+                                                                                            add_brother((yyvsp[-4].node),create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                         }
 
                                                                                         if((yyvsp[0].node) != NULL) {
                                                                                             add_brother((yyvsp[-4].node),(yyvsp[0].node));
                                                                                         }else {
-                                                                                            add_brother((yyvsp[-4].node),create_simple_node("Null"));
+                                                                                            add_brother((yyvsp[-4].node),create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                         }
                                                                                     } else {
                                                                                         (yyval.node) = NULL;
@@ -1854,17 +1854,17 @@ yyreduce:
   case 41:
 #line 343 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("While");
+                                                                                    (yyval.node) = create_simple_node("While", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-2].node) != NULL) {
                                                                                       add_child((yyval.node),(yyvsp[-2].node));
                                                                                     } else {
-                                                                                      auxNull = create_simple_node("Null");
+                                                                                      auxNull = create_simple_node("Null", yylineno, (int)(columnNumber));
                                                                                       add_child((yyval.node),auxNull);
                                                                                     }
                                                                                     if((yyvsp[0].node) != NULL) {
                                                                                         add_brother((yyval.node)->son,(yyvsp[0].node));
                                                                                     }else {
-                                                                                        add_brother((yyval.node)->son,create_simple_node("Null"));
+                                                                                        add_brother((yyval.node)->son,create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                     }
                                                                                 }
 #line 1871 "y.tab.c" /* yacc.c:1661  */
@@ -1873,9 +1873,9 @@ yyreduce:
   case 42:
 #line 358 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                    (yyval.node) = create_simple_node("Return");
+                                                                                    (yyval.node) = create_simple_node("Return", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-1].node) == NULL){
-                                                                                        add_child((yyval.node), create_simple_node("Null"));
+                                                                                        add_child((yyval.node), create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                     }
                                                                                     else{
                                                                                         add_child((yyval.node),(yyvsp[-1].node));
@@ -1894,17 +1894,17 @@ yyreduce:
                                                                                         stat_aux = stat_aux -> next_brother;
                                                                                     }
                                                                                     if((yyvsp[-2].node) != NULL && (yyvsp[-1].node) != NULL) {
-                                                                                        (yyval.node) = create_simple_node("StatList");
+                                                                                        (yyval.node) = create_simple_node("StatList", yylineno, (int)(columnNumber));
                                                                                         add_child((yyval.node),(yyvsp[-2].node));
                                                                                         add_brother((yyval.node)->son,(yyvsp[-1].node));
                                                                                         add_brother((yyval.node)->son,(yyvsp[0].node));
                                                                                     } else {
                                                                                         if((yyvsp[-2].node) != NULL && (yyvsp[-1].node) == NULL && stat_num >=1) {
-                                                                                            (yyval.node) = create_simple_node("StatList");
+                                                                                            (yyval.node) = create_simple_node("StatList", yylineno, (int)(columnNumber));
                                                                                             add_child((yyval.node),(yyvsp[-2].node));
                                                                                             add_brother((yyval.node)->son, (yyvsp[0].node));
                                                                                         }else if((yyvsp[-1].node) != NULL && (yyvsp[-2].node) == NULL && stat_num >=1){
-                                                                                            (yyval.node) = create_simple_node("StatList");
+                                                                                            (yyval.node) = create_simple_node("StatList", yylineno, (int)(columnNumber));
                                                                                             add_child((yyval.node),(yyvsp[-1].node));
                                                                                             add_brother((yyval.node)->son, (yyvsp[0].node));
                                                                                         }else if((yyvsp[-1].node) != NULL && (yyvsp[-2].node) == NULL) {
@@ -1914,7 +1914,7 @@ yyreduce:
                                                                                             (yyval.node) = (yyvsp[-2].node);
                                                                                             add_brother((yyval.node), (yyvsp[0].node));
                                                                                         }else if((yyvsp[-1].node) == NULL && (yyvsp[-2].node) == NULL && stat_num >=2) {
-                                                                                            (yyval.node) = create_simple_node("StatList");
+                                                                                            (yyval.node) = create_simple_node("StatList", yylineno, (int)(columnNumber));
                                                                                             add_child((yyval.node),(yyvsp[0].node));
                                                                                         }
                                                                                     }
@@ -1951,7 +1951,7 @@ yyreduce:
   case 47:
 #line 420 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Comma");
+                                                                                  (yyval.node) = create_simple_node("Comma", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyval.node)->son,(yyvsp[0].node));
                                                                                 }
@@ -1961,7 +1961,7 @@ yyreduce:
   case 48:
 #line 427 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Store");
+                                                                                  (yyval.node) = create_simple_node("Store", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -1971,7 +1971,7 @@ yyreduce:
   case 49:
 #line 432 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("And");
+                                                                                  (yyval.node) = create_simple_node("And", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -1981,7 +1981,7 @@ yyreduce:
   case 50:
 #line 437 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Or");
+                                                                                  (yyval.node) = create_simple_node("Or", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -1991,7 +1991,7 @@ yyreduce:
   case 51:
 #line 442 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("BitWiseAnd");
+                                                                                  (yyval.node) = create_simple_node("BitWiseAnd", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2001,7 +2001,7 @@ yyreduce:
   case 52:
 #line 447 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("BitWiseOr");
+                                                                                  (yyval.node) = create_simple_node("BitWiseOr", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2011,7 +2011,7 @@ yyreduce:
   case 53:
 #line 452 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("BitWiseXor");
+                                                                                  (yyval.node) = create_simple_node("BitWiseXor", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2021,7 +2021,7 @@ yyreduce:
   case 54:
 #line 457 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Eq");
+                                                                                  (yyval.node) = create_simple_node("Eq", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2031,7 +2031,7 @@ yyreduce:
   case 55:
 #line 462 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Ne");
+                                                                                  (yyval.node) = create_simple_node("Ne", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2041,7 +2041,7 @@ yyreduce:
   case 56:
 #line 467 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Lt");
+                                                                                  (yyval.node) = create_simple_node("Lt", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2051,7 +2051,7 @@ yyreduce:
   case 57:
 #line 472 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Gt");
+                                                                                  (yyval.node) = create_simple_node("Gt", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2061,7 +2061,7 @@ yyreduce:
   case 58:
 #line 477 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Le");
+                                                                                  (yyval.node) = create_simple_node("Le", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2071,7 +2071,7 @@ yyreduce:
   case 59:
 #line 482 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Ge");
+                                                                                  (yyval.node) = create_simple_node("Ge", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2081,7 +2081,7 @@ yyreduce:
   case 60:
 #line 487 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Add");
+                                                                                  (yyval.node) = create_simple_node("Add", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2091,7 +2091,7 @@ yyreduce:
   case 61:
 #line 492 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Sub");
+                                                                                  (yyval.node) = create_simple_node("Sub", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2101,7 +2101,7 @@ yyreduce:
   case 62:
 #line 497 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Mul");
+                                                                                  (yyval.node) = create_simple_node("Mul", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2111,7 +2111,7 @@ yyreduce:
   case 63:
 #line 502 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Div");
+                                                                                  (yyval.node) = create_simple_node("Div", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2121,7 +2121,7 @@ yyreduce:
   case 64:
 #line 507 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Mod");
+                                                                                  (yyval.node) = create_simple_node("Mod", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
                                                                                   add_brother((yyvsp[-2].node),(yyvsp[0].node));
                                                                                 }
@@ -2131,7 +2131,7 @@ yyreduce:
   case 65:
 #line 512 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Not");
+                                                                                  (yyval.node) = create_simple_node("Not", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
                                                                                 }
 #line 2138 "y.tab.c" /* yacc.c:1661  */
@@ -2140,7 +2140,7 @@ yyreduce:
   case 66:
 #line 516 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Minus");
+                                                                                  (yyval.node) = create_simple_node("Minus", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
                                                                                 }
 #line 2147 "y.tab.c" /* yacc.c:1661  */
@@ -2149,7 +2149,7 @@ yyreduce:
   case 67:
 #line 520 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Plus");
+                                                                                  (yyval.node) = create_simple_node("Plus", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
                                                                                 }
 #line 2156 "y.tab.c" /* yacc.c:1661  */
@@ -2157,25 +2157,25 @@ yyreduce:
 
   case 68:
 #line 524 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_value_node("Id",(yyvsp[0].id));}
+    { (yyval.node) = create_value_node("Id",(yyvsp[0].id), yylineno, (int)(columnNumber- strlen((yyvsp[0].id))));}
 #line 2162 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 69:
 #line 525 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_value_node("IntLit",(yyvsp[0].intlit));}
+    { (yyval.node) = create_value_node("IntLit",(yyvsp[0].intlit), yylineno, (int)(columnNumber - strlen((yyvsp[0].intlit))));}
 #line 2168 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 70:
 #line 526 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_value_node("ChrLit",(yyvsp[0].chrlit));}
+    { (yyval.node) = create_value_node("ChrLit",(yyvsp[0].chrlit), yylineno, (int)(columnNumber - strlen((yyvsp[0].chrlit))));}
 #line 2174 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 71:
 #line 527 "uccompiler.y" /* yacc.c:1661  */
-    { (yyval.node) = create_value_node("RealLit",(yyvsp[0].reallit));}
+    { (yyval.node) = create_value_node("RealLit",(yyvsp[0].reallit), yylineno, (int)(columnNumber - strlen((yyvsp[0].reallit))));}
 #line 2180 "y.tab.c" /* yacc.c:1661  */
     break;
 
@@ -2194,8 +2194,8 @@ yyreduce:
   case 74:
 #line 530 "uccompiler.y" /* yacc.c:1661  */
     {
-                                                                                  (yyval.node) = create_simple_node("Call");
-                                                                                  add_child((yyval.node), create_value_node("Id",(yyvsp[-3].id)));
+                                                                                  (yyval.node) = create_simple_node("Call", yylineno, (int)(columnNumber - strlen((yyvsp[-3].id))));
+                                                                                  add_child((yyval.node), create_value_node("Id",(yyvsp[-3].id), yylineno, (int)(columnNumber- strlen((yyvsp[-3].id)))));
                                                                                   add_brother((yyval.node)->son,(yyvsp[-1].node));
                                                                                 }
 #line 2202 "y.tab.c" /* yacc.c:1661  */
@@ -2245,7 +2245,7 @@ yyreduce:
 
   case 81:
 #line 553 "uccompiler.y" /* yacc.c:1661  */
-    {(yyval.node) = create_value_node("Id",(yyvsp[0].id));}
+    {(yyval.node) = create_value_node("Id",(yyvsp[0].id), yylineno, (int)(columnNumber - strlen((yyvsp[0].id))));}
 #line 2250 "y.tab.c" /* yacc.c:1661  */
     break;
 

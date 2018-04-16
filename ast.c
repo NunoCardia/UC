@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "ast.h"
 
-tree_node* create_simple_node(char* name) {
+tree_node* create_simple_node(char* name,int line,int col) {
 
     tree_node* new_node = (tree_node*) malloc( sizeof(tree_node) );
 
@@ -10,6 +10,11 @@ tree_node* create_simple_node(char* name) {
         new_node->next_brother = NULL;
         new_node->son = NULL;
         new_node->father = NULL;
+        new_node->line = line;
+        new_node->col = col;
+        new_node->an_params = NULL;
+        new_node->an_n_params = 0;
+        strcpy(new_node->an_type,"");
     } else {
         printf("ERROR SIMPLE NODE\n");
     }
@@ -17,7 +22,7 @@ tree_node* create_simple_node(char* name) {
     return new_node;
 }
 
-tree_node* create_value_node(char* name, char* value) {
+tree_node* create_value_node(char* name, char* value,int line,int col) {
     tree_node* new_node = (tree_node*)malloc(sizeof(tree_node));
 
     if(new_node != NULL) {
@@ -25,7 +30,11 @@ tree_node* create_value_node(char* name, char* value) {
         new_node->next_brother = NULL;
         new_node->son = NULL;
         new_node->father = NULL;
-
+        new_node->line = line;
+        new_node->col = col;
+        new_node->an_params = NULL;
+        new_node->an_n_params = 0;
+        strcpy(new_node->an_type,"");
         strcpy(new_node->value, value);
     } else {
         printf("ERROR STR NODE\n");
@@ -58,6 +67,7 @@ void add_brother(tree_node* brother, tree_node* new_son) {
 
 /* PRINTING */
 void print_terminal(tree_node* node){
+    //printf("%s(%s)\tline: %d\tcol: %d\n", node->name, node->value,node->line,node->col);
     printf("%s(%s)\n", node->name, node->value);
 }
 
@@ -74,6 +84,7 @@ void print_tree(tree_node* node, int level){
         if(strcmp(node->name, "Id") == 0 || strcmp(node->name, "ChrLit") == 0 || strcmp(node->name, "RealLit") == 0 || strcmp(node->name, "IntLit") == 0){
             print_terminal(node);
         } else {
+            //printf("%s\tline: %d\tcol: %d\n", node->name,node->line,node->col);
             printf("%s\n", node->name);
         }
 
