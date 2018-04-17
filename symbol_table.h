@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ast.h"
-
 #define MAX_STR 100
 
 typedef struct sym_table{
@@ -17,3 +15,6 @@ typedef struct sym_table{
   struct sym_table* definition;
   int defined;
 } sym_table;
+
+
+sym_table *st,*temp;

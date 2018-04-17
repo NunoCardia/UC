@@ -2,19 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_STR 100
+#include "symbol_table.h"
 
-typedef struct sym_table{
-  char table_type[MAX_STR];
-  char name[MAX_STR];
-  char type[MAX_STR];
-  int n_params;
-  struct sym_table** params;
-  int is_parameter;
-  struct sym_table* next;
-  struct sym_table* definition;
-  int defined;
-} sym_table;
+#define MAX_STR 100
 
 typedef struct _tree_node {
     struct _tree_node* father;

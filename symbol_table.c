@@ -16,7 +16,23 @@ sym_table *create_node(char *node_type,char *name,char *type){
 
   int i;
   for(i=0;i<20;i++){
-    node->params = NULL;
+    node->params[i] = NULL;
   }
   return node;
+}
+
+
+void init_sym_table(){
+  st = create_node("GLOBAL","Global","UNKNOWN");
+  temp = st;
+  temp->next = create_node("FUNC_DECLARATION","getchar","INT");
+  temp->next->defined = 1;
+  temp->next->n_params = 0;
+  temp = temp->next;
+
+  temp->next = create_node("FUNC_DECLARATION","putchar","INT");
+  temp->next->defined = 1;
+  temp->next->n_params = 1;
+  temp->next->params[0] = create_node("VARIABLE",NULL,"INT");
+  temp = temp->next;
 }

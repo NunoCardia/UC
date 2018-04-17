@@ -7,7 +7,7 @@ ERROR: Verificar se o que está a esquerda é uma variavel ou nao
 EXAMPLE:
 5 = a
 -------------------
-const int a = 10
+const int a = 10 ------> HA CONST EM UC?
 a = 5
 -------------------
 a+b = c
