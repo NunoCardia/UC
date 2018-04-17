@@ -1,0 +1,18 @@
+Lvalue required
+
+In C and C++, LValue must be a container. In other words a memory location that can store something and is not restricted to do so. And 
+variables are the only containers available in C and C++.
+Lvalue errors occurs when the Lvalue is not a variable that can store a value. 
+ERROR: Verificar se o que está a esquerda é uma variavel ou nao
+EXAMPLE:
+5 = a
+-------------------
+const int a = 10
+a = 5
+-------------------
+a+b = c
+-------------------
+if(a = 5)
+-------------------
+
+PERGUNTAR AO PROFESSOR SE ISTO TA CERTO?????

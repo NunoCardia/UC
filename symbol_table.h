@@ -8,7 +8,7 @@
 
 typedef struct sym_table{
   char node_type[MAX_STR]; //node_type
-  char name[MAX_STR];//id
+  char id[MAX_STR];//id
   char type[MAX_STR];//type_t type
   int n_params;
   struct sym_table** params;
