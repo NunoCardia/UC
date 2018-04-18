@@ -36,3 +36,43 @@ void init_sym_table(){
   temp->next->params[0] = create_node("VARIABLE",NULL,"INT");
   temp = temp->next;
 }
+
+void print_sym_table_elem(sym_table *element){
+  if(strcmp(element->node_type,"GLOBAL")==0){
+    printf("===== Global Symbol Table =====\n");
+  }
+  else if(strcmp(element->node_type,"VARIABLE")==0){
+    //print for VARIABLE
+  }
+  else if(strcmp(element->node_type,"FUNC_DECLARATION")==0){
+    //print for FUNC_DECLARATION
+  }
+  else if(strcmp(element->node_type,"FUNC_TABLE")==0){
+    printf("===== Function %s Symbol Table =====\n",element->id);
+  }
+  else if(strcmp(element->node_type,"RETURN_VALUE")==0){
+    printf("return\t%s\n",element->type);
+  }
+}
+
+void print_sym_table(sym_table *table){
+  sym_table *temp = table;
+  sym_table *final;
+  while (temp->next !=NULL) {
+    print_sym_table_elem(temp);
+    temp = temp->next;
+  }
+  temp = temp->next;
+  while (temp != NULL) {
+    if(temp->definition != NULL){
+      print_sym_table_elem(temp);
+      final = temp->definition->next;
+      while (final != NULL) {
+        print_sym_table_elem(final);
+        final = final->next;
+      }
+    }
+    temp = temp->next;
+  }
+
+}
