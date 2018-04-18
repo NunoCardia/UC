@@ -16,3 +16,15 @@ if(a = 5)
 -------------------
 
 PERGUNTAR AO PROFESSOR SE ISTO TA CERTO?????
+
+SYMBOL TABLE PARA FUNÇÕES COM PARAMETROS
+
+===== Function abc Symbol Table =====
+return	int
+a	int	param
+b	int	param
+c	double	param
+
+É isto??
+
+Árvores Anotadas ????????????????????

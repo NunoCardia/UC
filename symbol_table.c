@@ -42,10 +42,26 @@ void print_sym_table_elem(sym_table *element){
     printf("===== Global Symbol Table =====\n");
   }
   else if(strcmp(element->node_type,"VARIABLE")==0){
-    //print for VARIABLE
+    if(strcmp(element->id,"") != 0){
+      if(element->is_parameter != 0){
+        printf("%s\t%s\tparam\n", element->id, element->type);
+      }
+      else{
+        printf("%s\t%s\n", element->id, element->type);
+      }
+    }
   }
   else if(strcmp(element->node_type,"FUNC_DECLARATION")==0){
-    //print for FUNC_DECLARATION
+    printf("%s\t%s(", element->id, element->type);
+    int i;
+    for (i = 0; i < element->n_params; i++) {
+      sym_table *temp = element->params[i];
+      printf("%s", temp->type);
+      if (i != element->n_params - 1) {
+        printf(",");
+      }
+    }
+    printf(")\n");
   }
   else if(strcmp(element->node_type,"FUNC_TABLE")==0){
     printf("===== Function %s Symbol Table =====\n",element->id);
@@ -74,5 +90,4 @@ void print_sym_table(sym_table *table){
     }
     temp = temp->next;
   }
-
 }
