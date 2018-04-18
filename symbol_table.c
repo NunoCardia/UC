@@ -120,7 +120,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
     int inserted = 0;
     int should_not_insert = 0;
     tree_node *node3 = return_tree_node(param_list_child,0);
-    if(return_tree_node(param_list_child,2)==NULL && strcmp(tolowercase(node3->name),"void")==0){ //int main(void)
+    if(n_childs(param_list_child) == 1 && strcmp(tolowercase(node3->name),"void")==0){ //se so tiver um filho int main(void)
       if(i < declaration_node->n_params){
         arg_mismatch = 1;
       }
