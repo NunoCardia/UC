@@ -1,4 +1,5 @@
-#include "symbol_table.h"
+#include "ast.h"
+
 
 
 sym_table *create_node(char *node_type,char *name,char *type){
@@ -21,19 +22,228 @@ sym_table *create_node(char *node_type,char *name,char *type){
   return node;
 }
 
+tree_node *return_tree_node(tree_node *node, int son){
+  int i=0;
+  tree_node *node1 = node->son;
+  while(node1!=NULL){
+    if(i==son){
+      return node1;
+    }
+    else{
+      node1 = node1->next_brother;
+      i++;
+    }
+  }
+  return NULL;
+}
+
+int n_childs(tree_node* node){
+  int i=0,soma;
+  tree_node *temp = return_tree_node(node,i);
+  while(temp!=NULL){
+    soma++;
+    i++;
+    temp = return_tree_node(node,i);
+  }
+  return soma;
+}
+
+char *tolowercase(char *name){
+  int i=0;
+  for(i=0; name[i]; i++){
+    name[i] = tolower(name[i]);
+  }
+  return name;
+}
+
+sym_table *create_variable_node(tree_node *node){
+  sym_table *new_node;
+  tree_node *node1 = return_tree_node(node,1);
+  tree_node *node2 = return_tree_node(node,0);
+  new_node = create_node("VARIABLE",node1->value,tolowercase(node2->name));
+  return new_node;
+}
+
+sym_table *create_declaration_node(tree_node *node){
+  tree_node *node1 = return_tree_node(node,1);
+  tree_node *node2 = return_tree_node(node,0);
+  sym_table *new_node = create_node("FUNC_DECLARATION",node1->value,tolowercase(node2->name));
+  return new_node;
+}
+
+sym_table *create_func_table_node(tree_node *node){
+  tree_node *node1 = return_tree_node(node,1);
+  tree_node *node2 = return_tree_node(node,0);
+  sym_table *new_node = create_node("FUNC_TABLE",node1->value,tolowercase(node2->name));
+  return new_node;
+}
+
+void print_function(sym_table *node){
+  int i=0;
+  printf("%s(",node->type);
+  if(node->n_params == 0){
+    printf("void");
+  }
+  else{
+    for (i = 0; i < node->n_params; i++) {
+      sym_table *arg = node->params[i];
+      printf("%s", arg->type);
+      if (i != node->n_params - 1) {
+        printf(",");
+      }
+    }
+  }
+  printf(")");
+}
+
+int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sym_table *declaration_node){
+  sym_table *new_node, *last_node;
+  int error_given,i = 0;
+
+  declaration_node->definition = table_node;
+  last_node = table_node;
+  tree_node *node2 = return_tree_node(cur_node,0);
+  new_node = create_node("RETURN",NULL,node2->name);
+  declaration_node->definition->next = new_node;
+  last_node = new_node;
+
+  tree_node* param_list = return_tree_node(cur_node,2);
+  int declaration_node_was_defined = declaration_node->n_params > 0;
+  int arg_mismatch = 0;
+  if (declaration_node_was_defined) {
+    if (strcmp(declaration_node->type,table_node->type)!=0) {
+      arg_mismatch = 1;
+    }
+  }
+  while (param_list!=NULL) {
+    tree_node *param_list_child = param_list->next_brother;
+    int inserted = 0;
+    int should_not_insert = 0;
+    tree_node *node3 = return_tree_node(param_list_child,0);
+    if(return_tree_node(param_list_child,2)==NULL && strcmp(tolowercase(node3->name),"void")==0){ //int main(void)
+      if(i < declaration_node->n_params){
+        arg_mismatch = 1;
+      }
+      new_node = create_node("VARIABLE",NULL,"void");
+      new_node->is_parameter = 1;
+      if (declaration_node_was_defined == 0) {
+        declaration_node->params[declaration_node->n_params++] = new_node;
+      }
+
+      inserted = 1;
+    }
+    if(!inserted){
+      new_node = create_variable_node(param_list_child);
+      new_node->is_parameter = 1;
+    }
+
+    if(i>=1){
+      sym_table *cur_st_node = table_node->next->next;
+      while (cur_st_node != NULL) {
+        if (strcmp(cur_st_node->id,"")!=0 && strcmp(new_node->id,"")!=0) {
+          if (!strcmp(cur_st_node->id, new_node->id)) {
+            printf("Line %d, col %d: Symbol %s already defined\n", param_list_child->line, param_list_child->col, cur_st_node->id);
+            should_not_insert = 1;
+            break;
+          }
+        }
+
+        if (cur_st_node == last_node) break;
+        cur_st_node = cur_st_node->next;
+      }
+    }
+
+    if (declaration_node_was_defined == 0) {
+      if (!inserted) {
+        declaration_node->params[declaration_node->n_params++] = new_node;
+      }
+    } else {
+      if (i < declaration_node->n_params) {
+        if (strcmp(declaration_node->params[i]->type,new_node->type)!=0) {
+          arg_mismatch = 1;
+        }
+      }
+    }
+    if (strcmp(tolowercase(new_node->type),"void")==0  && (strcmp(new_node->id,"")!=0 || return_tree_node(param_list,2)!=NULL)) {
+      tree_node *asd = return_tree_node(param_list_child,0);
+      printf("Line %d, col %d: Invalid use of void type in declaration\n", asd->line, asd->col);
+      should_not_insert = 1;
+      error_given = 1;
+      break;
+    }
+
+    if (!inserted && !should_not_insert) {
+      last_node->next = new_node;
+      last_node = new_node;
+    }
+    param_list = param_list->next_brother;
+    i++;
+  }
+  if(!error_given){
+    if(arg_mismatch || declaration_node->n_params != n_childs(param_list)){
+      error_given = 1;
+      printf("Line %d, col %d: Conflicting types (got ", cur_node->line, cur_node->col);
+      printf("%s(",table_node->type);
+      sym_table *cur_st_node = table_node->next->next;
+      if (cur_st_node == NULL) {
+        printf("void");
+      } else {
+        while (cur_st_node != NULL) {
+          printf("%s",cur_st_node->type);
+          if (cur_st_node != last_node) {
+            printf(",");
+          }
+          cur_st_node = cur_st_node->next;
+        }
+      }
+      printf("), expected ");
+      print_function(declaration_node);
+      printf(")\n");
+    }
+  }
+  if (error_given) {
+    declaration_node->definition = NULL;
+    free(table_node);
+  }
+  return error_given;
+}
+
+int add_to_top(sym_table *st, sym_table *node){
+  if (st->next == NULL) {
+    st->next = node;
+    return 1;
+  }
+
+  sym_table *cur_st_node = st;
+
+  while (cur_st_node->next != NULL) {
+    if (strcmp(cur_st_node->next->node_type,"FUNC_TABLE")==0) {
+      sym_table *tmp = cur_st_node->next;
+      cur_st_node->next = node;
+      node->next = tmp;
+      return 0;
+    }
+
+    cur_st_node = cur_st_node->next;
+  }
+
+  cur_st_node->next = node;
+  return 1;
+}
+
 
 void init_sym_table(){
   st = create_node("GLOBAL","Global","UNKNOWN");
   temp = st;
-  temp->next = create_node("FUNC_DECLARATION","getchar","INT");
+  temp->next = create_node("FUNC_DECLARATION","getchar","int");
   temp->next->defined = 1;
   temp->next->n_params = 0;
   temp = temp->next;
 
-  temp->next = create_node("FUNC_DECLARATION","putchar","INT");
+  temp->next = create_node("FUNC_DECLARATION","putchar","int");
   temp->next->defined = 1;
   temp->next->n_params = 1;
-  temp->next->params[0] = create_node("VARIABLE",NULL,"INT");
+  temp->next->params[0] = create_node("VARIABLE",NULL,"int");
   temp = temp->next;
 }
 
@@ -55,8 +265,8 @@ void print_sym_table_elem(sym_table *element){
     printf("%s\t%s(", element->id, element->type);
     int i;
     for (i = 0; i < element->n_params; i++) {
-      sym_table *temp = element->params[i];
-      printf("%s", temp->type);
+      sym_table *temp1 = element->params[i];
+      printf("%s", temp1->type);
       if (i != element->n_params - 1) {
         printf(",");
       }
@@ -72,22 +282,22 @@ void print_sym_table_elem(sym_table *element){
 }
 
 void print_sym_table(sym_table *table){
-  sym_table *temp = table;
+  sym_table *temp1 = table;
   sym_table *final;
-  while (temp->next !=NULL) {
-    print_sym_table_elem(temp);
-    temp = temp->next;
+  while (temp1->next !=NULL) {
+    print_sym_table_elem(temp1);
+    temp1 = temp1->next;
   }
-  temp = temp->next;
-  while (temp != NULL) {
-    if(temp->definition != NULL){
-      print_sym_table_elem(temp);
-      final = temp->definition->next;
+  temp1 = temp1->next;
+  while (temp1 != NULL) {
+    if(temp1->definition != NULL){
+      print_sym_table_elem(temp1);
+      final = temp1->definition->next;
       while (final != NULL) {
         print_sym_table_elem(final);
         final = final->next;
       }
     }
-    temp = temp->next;
+    temp1 = temp1->next;
   }
 }

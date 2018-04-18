@@ -1,6 +1,6 @@
 int a(int b);
 void f(void) {
-    4=6;
+    int b = 0;
     if( a==b ) {
         a=b;
     }
