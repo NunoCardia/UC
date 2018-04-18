@@ -5,9 +5,9 @@
 #define MAX_STR 100
 
 typedef struct sym_table{
-  char node_type[MAX_STR]; //node_type
-  char id[MAX_STR];//id
-  char type[MAX_STR];//type_t type
+  char node_type[MAX_STR];
+  char id[MAX_STR];
+  char type[MAX_STR];
   int n_params;
   struct sym_table** params;
   int is_parameter;
