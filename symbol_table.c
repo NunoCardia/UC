@@ -39,11 +39,11 @@ tree_node *return_tree_node(tree_node *node, int son){
 
 int n_childs(tree_node* node){
   int i=0,soma;
-  tree_node *temp = return_tree_node(node,i);
+  tree_node *temp = node->son;
   while(temp!=NULL){
     soma++;
     i++;
-    temp = return_tree_node(node,i);
+    temp = temp->next_brother;
   }
   return soma;
 }
