@@ -111,7 +111,8 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     parse_while(node,st,function_name);
   }
 
-  if(strcmp(node->name,"Program")==0 || strcmp(node->name,"Null")==0){
+  if(strcmp(node->name,"Program")==0 || strcmp(node->name,"Null")==0 || strcmp(node->name,"FuncDefinition")==0 || strcmp(node->name,"FuncBody")==0 || strcmp(node->name,"While")==0 ||
+  strcmp(node->name,"Return")==0 || strcmp(node->name,"StatList")==0 || strcmp(node->name,"If")==0 ||){
     return;
   }
 }
