@@ -8,6 +8,7 @@
     #include <stdbool.h>
     #include "y.tab.h"
     #include "ast.h"
+    #include "symbol_table.h"
 
 
     int flag = 0;
@@ -278,12 +279,21 @@ int main(int argc, char const *argv[])
             flag = 1;
         }else if(strcmp(argv[1], "-t") == 0) {
             flag = 3;
+        }else if(strcmp(argv[1],"-s") == 0){
+            flag = 5;
         }
     }
     if (check_flag()) {
         yyparse();
         if(flag == 3 && flag_error == 0) {
             print_tree(root, 0);
+        }
+        if(flag == 5 && flag_error == 0){
+          init_sym_table();
+          semantics(root,st,NULL,1,0);
+          //st_print_table(st);
+          //printf("\n");
+          //print_anotated_tree(root,0,1);
         }
 
     } else {

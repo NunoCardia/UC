@@ -98,7 +98,7 @@ void print_function(sym_table *node){
 
 int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sym_table *declaration_node){
   sym_table *new_node, *last_node;
-  int error_given=0,i = 0;
+  int error_given=0,i = 0,childs;
 
   declaration_node->definition = table_node;
   last_node = table_node;
@@ -115,12 +115,13 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
       arg_mismatch = 1;
     }
   }
-  while (param_list!=NULL) {
-    tree_node *param_list_child = param_list->next_brother;
+  childs = n_childs(param_list);
+  for(i=0;i < childs ; i++){
+    tree_node *param_declaration = return_tree_node(param_list,i);
     int inserted = 0;
     int should_not_insert = 0;
-    tree_node *node3 = return_tree_node(param_list_child,0);
-    if(n_childs(param_list_child) == 1 && strcmp(tolowercase(node3->name),"void")==0){ //se so tiver um filho int main(void)
+    tree_node *node3 = return_tree_node(param_declaration,0);
+    if(n_childs(param_declaration) == 1 && strcmp(tolowercase(node3->name),"void")==0){ //se so tiver um filho int main(void)
       if(i < declaration_node->n_params){
         arg_mismatch = 1;
       }
@@ -133,7 +134,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
       inserted = 1;
     }
     if(!inserted){
-      new_node = create_variable_node(param_list_child);
+      new_node = create_variable_node(param_declaration);
       new_node->is_parameter = 1;
     }
 
@@ -142,7 +143,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
       while (cur_st_node != NULL) {
         if (strcmp(cur_st_node->id,"")!=0 && strcmp(new_node->id,"")!=0) {
           if (!strcmp(cur_st_node->id, new_node->id)) {
-            printf("Line %d, col %d: Symbol %s already defined\n", param_list_child->line, param_list_child->col, cur_st_node->id);
+            printf("Line %d, col %d: Symbol %s already defined\n", param_declaration->line, param_declaration->col, cur_st_node->id);
             should_not_insert = 1;
             break;
           }
@@ -164,8 +165,8 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
         }
       }
     }
-    if (strcmp(tolowercase(new_node->type),"void")==0  && (strcmp(new_node->id,"")!=0 || return_tree_node(param_list,2)!=NULL)) {
-      tree_node *asd = return_tree_node(param_list_child,0);
+    if (strcmp(tolowercase(new_node->type),"void")==0  && (strcmp(new_node->id,"")!=0 || n_childs(param_list) > 1)) {
+      tree_node *asd = return_tree_node(param_declaration,0);
       printf("Line %d, col %d: Invalid use of void type in declaration\n", asd->line, asd->col);
       should_not_insert = 1;
       error_given = 1;
@@ -176,8 +177,6 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
       last_node->next = new_node;
       last_node = new_node;
     }
-    param_list = param_list->next_brother;
-    i++;
   }
   if(!error_given){
     if(arg_mismatch || declaration_node->n_params != n_childs(param_list)){

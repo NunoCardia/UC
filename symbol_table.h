@@ -4,9 +4,6 @@
 #include <ctype.h>
 #include "structures.h"
 
-
-
-
 sym_table *st,*temp;
 
 sym_table *create_node(char *node_type,char *name,char *type);
