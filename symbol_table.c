@@ -1,4 +1,4 @@
-#include "ast.h"
+#include "symbol_table.h"
 
 
 
@@ -38,7 +38,7 @@ tree_node *return_tree_node(tree_node *node, int son){
 }
 
 int n_childs(tree_node* node){
-  int i=0,soma;
+  int i=0,soma=0;
   tree_node *temp = node->son;
   while(temp!=NULL){
     soma++;
@@ -98,7 +98,7 @@ void print_function(sym_table *node){
 
 int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sym_table *declaration_node){
   sym_table *new_node, *last_node;
-  int error_given,i = 0;
+  int error_given=0,i = 0;
 
   declaration_node->definition = table_node;
   last_node = table_node;
