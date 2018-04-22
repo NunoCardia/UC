@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
 #include "symbol_table.h"
 
 #define MAX_STR 100
