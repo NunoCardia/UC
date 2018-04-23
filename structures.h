@@ -1,3 +1,5 @@
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
 
 #define MAX_STR 100
 
@@ -26,3 +28,6 @@ typedef struct _tree_node {
     sym_table **an_params;
     int line,col;//for location purposes when printing errors
 } tree_node;
+
+
+#endif

@@ -9,6 +9,7 @@
     #include "y.tab.h"
     #include "ast.h"
     #include "symbol_table.h"
+    #include "semantics.h"
 
 
     int flag = 0;
@@ -290,8 +291,8 @@ int main(int argc, char const *argv[])
         }
         if(flag == 5 && flag_error == 0){
           init_sym_table();
-          semantics(root,st,NULL,1,0);
-          //st_print_table(st);
+          semantics(root,st,"",1,0);
+          print_sym_table(st);
           //printf("\n");
           //print_anotated_tree(root,0,1);
         }
