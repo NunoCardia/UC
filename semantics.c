@@ -260,24 +260,20 @@ void parse_declaration(sym_table *st,tree_node *node,char function_name[MAX_STR]
     printf(")\n");
     return;
   }
-
   if (strcmp(new_node->type,"void")==0) {
     t1 = return_tree_node(node,0);
     printf("Line %d, col %d: Invalid use of void type in declaration\n", t1->line, t1->col);
     return;
   }
 
-  if (function_name != NULL) { // variaveis globais podem ser declaradas duas vezes
+  if (strcmp(function_name,"")!=0) { // variaveis globais podem ser declaradas duas vezes
     while (cur_st_node != NULL) {
       if (!strcmp(cur_st_node->id, function_name)) {
         func_node = cur_st_node;
       }
-
       cur_st_node = cur_st_node->next;
     }
-
     cur_st_node = func_node->definition->next;
-
     while (cur_st_node != NULL) {
       t1 = return_tree_node(node,n_childs(node) - 1);
       if (strcmp(cur_st_node->id,"")!=0 && !strcmp(cur_st_node->id, t1->value)) {
@@ -295,15 +291,12 @@ void parse_declaration(sym_table *st,tree_node *node,char function_name[MAX_STR]
           printf("Line %d, col %d: Conflicting types (got %s", node->line, node->col, new_node->type);
           printf(", expected %s)\n", cur_st_node->type);
         }
-
         duplicate = 1;
       }
-
       cur_st_node = cur_st_node->next;
     }
   }
-
-  if (!function_name) {
+  if (strcmp(function_name,"")==0) {
     if (!duplicate) {
       if (add_to_top(st, new_node) == 1) {
         last = new_node;

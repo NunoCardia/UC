@@ -1,7 +1,5 @@
 #include "symbol_table.h"
 
-
-
 sym_table *create_node(char *node_type,char *name,char *type){
   sym_table *node = (sym_table *) malloc(sizeof(sym_table));
   memset(node,0,sizeof(sym_table));
@@ -142,8 +140,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
     int inserted = 0;
     int should_not_insert = 0;
     tree_node *node3 = return_tree_node(param_declaration,0);
-    char temp_array[MAX_STR];
-    if(n_childs(param_declaration) == 1 && strcmp(parse_type(node3->name),"void")==0){ //se so tiver um filho int main(void)
+    if(n_childs(param_declaration) == 1 && strcmp(parse_type(node3->name),"void")==0){
       if(i < declaration_node->n_params){
         arg_mismatch = 1;
       }
