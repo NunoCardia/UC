@@ -34,15 +34,15 @@ void print_function_type(sym_table *decl_node) {
   printf(")");
 }
 
-sym_table *is_function(sym_table *st, tree_node *which_node, char *func_name) {
+sym_table *is_function(sym_table *st, tree_node *which_node, char *function_name) {
   sym_table *cur_st_node = st;
 
   if (strcmp(which_node->value,"")==0) {
     return NULL;
   }
-  if (func_name != NULL) {
+  if (function_name != NULL) {
     while (cur_st_node != NULL) {
-      if (!strcmp(cur_st_node->id, func_name) && strcmp(cur_st_node->node_type,"FuncDeclaration")==0) {
+      if (!strcmp(cur_st_node->id, function_name) && strcmp(cur_st_node->node_type,"FuncDeclaration")==0) {
         if (cur_st_node->definition == NULL) break;
 
         cur_st_node = cur_st_node->definition->next;
@@ -64,7 +64,7 @@ sym_table *is_function(sym_table *st, tree_node *which_node, char *func_name) {
     }
   }
 
-  // now check if func_name corresponds to some global function
+  // now check if function_name corresponds to some global function
   cur_st_node = st;
   while (cur_st_node != NULL) {
     if (strcmp(which_node->value,"")!=0) {
@@ -246,7 +246,89 @@ void parse_func_declaration(sym_table *st, tree_node *node, char function_name[M
 }
 
 void parse_declaration(sym_table *st,tree_node *node,char function_name[MAX_STR]){
-  return;
+  sym_table *cur_st_node = st;
+  sym_table *func_node;
+  int duplicate = 0;
+  sym_table *new_node = create_variable_node(node);
+  tree_node *t1 = return_tree_node(node,1);
+  func_node = is_function(st, t1, function_name);
+  if (func_node != NULL && function_name == NULL) {
+    printf("Line %d, col %d: Conflicting types (got ", node->line, node->col);
+    printf("%s",new_node->type);
+    printf(", expected ");
+    print_function_type(func_node);
+    printf(")\n");
+    return;
+  }
+
+  if (strcmp(new_node->type,"void")==0) {
+    t1 = return_tree_node(node,0);
+    printf("Line %d, col %d: Invalid use of void type in declaration\n", t1->line, t1->col);
+    return;
+  }
+
+  if (function_name != NULL) { // variaveis globais podem ser declaradas duas vezes
+    while (cur_st_node != NULL) {
+      if (!strcmp(cur_st_node->id, function_name)) {
+        func_node = cur_st_node;
+      }
+
+      cur_st_node = cur_st_node->next;
+    }
+
+    cur_st_node = func_node->definition->next;
+
+    while (cur_st_node != NULL) {
+      t1 = return_tree_node(node,n_childs(node) - 1);
+      if (strcmp(cur_st_node->id,"")!=0 && !strcmp(cur_st_node->id, t1->value)) {
+        printf("Line %d, col %d: Symbol %s already defined\n", node->line, node->col,t1->value);
+        duplicate = 1;
+        break;
+      }
+
+      cur_st_node = cur_st_node->next;
+    }
+  } else {
+    while (cur_st_node != NULL) {
+      if (!strcmp(cur_st_node->id, new_node->id)) { // check if preivous decl was something else
+        if (strcmp(cur_st_node->type,new_node->type)!=0) {
+          printf("Line %d, col %d: Conflicting types (got %s", node->line, node->col, new_node->type);
+          printf(", expected %s)\n", cur_st_node->type);
+        }
+
+        duplicate = 1;
+      }
+
+      cur_st_node = cur_st_node->next;
+    }
+  }
+
+  if (!function_name) {
+    if (!duplicate) {
+      if (add_to_top(st, new_node) == 1) {
+        last = new_node;
+      }
+    }
+  } else {
+    if (!duplicate) {
+      cur_st_node = st;
+
+      while (cur_st_node != NULL) {
+        if (!strcmp(cur_st_node->id, function_name)) {
+          func_node = cur_st_node;
+        }
+
+        cur_st_node = cur_st_node->next;
+      }
+
+      cur_st_node = func_node->definition;
+      while (cur_st_node->next != NULL) {
+        cur_st_node = cur_st_node->next;
+      }
+
+      cur_st_node->next = new_node;
+    }
+  }
 }
 
 void parse_id(tree_node *node, sym_table *st, char function_name[MAX_STR], int is_anotated){
@@ -327,7 +409,6 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     //check if function definition has errors
     error = parse_func_definition(st,node);
     t1 = return_tree_node(node,1);
-    printf("t1->name %s\n",t1->value);
     function_name = (char *) strdup(t1->value);
     childs = n_childs(node);
     for(i=0;i<childs;i++){

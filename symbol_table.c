@@ -64,6 +64,9 @@ char* parse_type(char *nome){
   else if(strcmp(nome,"Double")==0 || strcmp(nome,"RealLit")==0){
     strcpy(to_return,"double");
   }
+  else if(strcmp(nome,"Short")==0){
+    strcpy(to_return,"short");
+  }
   else{
     strcpy(to_return,"UNKNOWN");
   }
@@ -122,7 +125,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
   declaration_node->definition = table_node;
   last_node = table_node;
   tree_node *node2 = return_tree_node(cur_node,0);
-  new_node = create_node("RETURN","",node2->name);
+  new_node = create_node("RETURN","",parse_type(node2->name));
   declaration_node->definition->next = new_node;
   last_node = new_node;
   tree_node* param_list = return_tree_node(cur_node,2);
@@ -232,20 +235,17 @@ int add_to_top(sym_table *st, sym_table *node){
     return 1;
   }
 
-  sym_table *cur_st_node = st;
-
-  while (cur_st_node->next != NULL) {
-    if (strcmp(cur_st_node->next->node_type,"FUNC_TABLE")==0) {
-      sym_table *tmp = cur_st_node->next;
-      cur_st_node->next = node;
+  while (st->next != NULL) {
+    if (strcmp(st->next->node_type,"FUNC_TABLE")==0) {
+      sym_table *tmp = st->next;
+      st->next = node;
       node->next = tmp;
       return 0;
     }
-
-    cur_st_node = cur_st_node->next;
+    st = st->next;
   }
 
-  cur_st_node->next = node;
+  st->next = node;
   return 1;
 }
 
@@ -264,7 +264,8 @@ void init_sym_table(){
 
   temp->next = create_node("FUNC_DECLARATION","getchar","int");
   temp->next->defined = 1;
-  temp->next->n_params = 0;
+  temp->next->n_params = 1;
+  temp->next->params[0] = create_node("VARIABLE","","void");
   temp = temp->next;
 
 
@@ -297,9 +298,9 @@ void print_sym_table_elem(sym_table *element){
     printf(")\n");
   }
   else if(strcmp(element->node_type,"FUNC_TABLE")==0){
-    printf("===== Function %s Symbol Table =====\n",element->id);
+    printf("\n===== Function %s Symbol Table =====\n",element->id);
   }
-  else if(strcmp(element->node_type,"RETURN_VALUE")==0){
+  else if(strcmp(element->node_type,"RETURN")==0){
     printf("return\t%s\n",element->type);
   }
 }
@@ -307,14 +308,14 @@ void print_sym_table_elem(sym_table *element){
 void print_sym_table(sym_table *table){
   sym_table *temp1 = table;
   sym_table *final;
-  while (temp1->next !=NULL) {
+  while (temp1!=NULL) {
     print_sym_table_elem(temp1);
     temp1 = temp1->next;
   }
-  temp1 = temp1->next;
+  temp1 = table->next;
   while (temp1 != NULL) {
     if(temp1->definition != NULL){
-      print_sym_table_elem(temp1);
+      print_sym_table_elem(temp1->definition);
       final = temp1->definition->next;
       while (final != NULL) {
         print_sym_table_elem(final);
