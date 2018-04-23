@@ -3,9 +3,9 @@ double a;
 short b;
 char y;
 
-int error(int a);
+void dec1(void);
 
-int main(int f2,double a2,short b2, char y2) {
+int main(int f2, double a2, short b2, char y2) {
 	int f1;
 	double a1;
 	short b1;

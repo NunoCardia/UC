@@ -76,7 +76,7 @@ sym_table *create_variable_node(tree_node *node){
   tree_node *node1 = return_tree_node(node,1);
   tree_node *node2 = return_tree_node(node,0);
   if(n_childs(node) <= 1){
-      new_node = create_node("VARIABLE",NULL,parse_type(node2->name));
+      new_node = create_node("VARIABLE","",parse_type(node2->name));
   }
   else{
       new_node = create_node("VARIABLE",node1->value,parse_type(node2->name));

@@ -2472,8 +2472,8 @@ int main(int argc, char const *argv[])
           init_sym_table();
           semantics(root,st,"",1,0);
           print_sym_table(st);
-          //printf("\n");
-          //print_anotated_tree(root,0,1);
+          printf("\n");
+          print_an_tree(root,0,1);
         }
 
     } else {

@@ -1,5 +1,54 @@
 #include "semantics.h"
 
+void print_an_node(tree_node* n, int an) {
+  if (!an) {
+    print_node(n);
+    return;
+  }
+
+  if (strcmp(n->name,"Id")==0 || strcmp(n->name,"ChrLit")==0 || strcmp(n->name,"IntLit")==0 || strcmp(n->name,"RealLit")==0) {
+    if (strcmp(n->an_type,"UNKNOWN")==0 || strcmp(n->an_type,"")==0) {
+      printf("%s(%s)\n", n->name, n->value);
+    } else if (n->an_n_params > 0) {
+      printf("%s(%s) - %s", n->name, n->value, n->an_type);
+      printf("(");
+
+      int i;
+
+      for (i = 0; i < n->an_n_params; i++) {
+        sym_table *arg = n->an_params[i];
+
+        printf("%s", arg->type);
+        if (i != n->an_n_params - 1) printf(",");
+      }
+      printf(")\n");
+    } else {
+      printf("%s(%s) - %s\n", n->name, n->value, n->an_type);
+
+    }
+  } else {
+    if (strcmp(n->an_type,"UNKNOWN")==0 || strcmp(n->an_type,"")==0) {
+      printf("%s\n", n->name);
+    } else {
+      printf("%s - %s\n", n->name,n->an_type);
+    }
+  }
+}
+
+void print_an_tree(tree_node* n, int d, int an) {
+  int i, k,childs;
+  for (k = 0; k < d; k++)
+    printf("..");
+
+  print_an_node(n, an);
+
+  childs = n_childs(n);
+  for (i = 0; i < childs; i++) {
+    tree_node *t1 = return_tree_node(n,i);
+    print_an_tree(t1, d + 1, an);
+  }
+}
+
 sym_table *is_sym_function(sym_table *st, sym_table *which_node) {
   sym_table *cur_st_node = st;
 
@@ -75,7 +124,6 @@ sym_table *is_function(sym_table *st, tree_node *which_node, char *function_name
 
     cur_st_node = cur_st_node->next;
   }
-
   return NULL;
 }
 
@@ -175,6 +223,7 @@ void parse_func_declaration(sym_table *st, tree_node *node, char function_name[M
     to_table->is_parameter = 1;
     declaration_node->params[declaration_node->n_params++] = to_table;
     if(strcmp(to_table->type,"void")==0 && (strcmp(to_table->id,"")!=0 || childs > 1)){
+
       tree_node *error_node = return_tree_node(param_declaration,0);
       printf("Line %d, col %d: Invalid use of void type in declaration\n", error_node->line, error_node->col);
       to_insert = 0;

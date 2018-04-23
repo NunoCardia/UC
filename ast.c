@@ -78,16 +78,19 @@ void print_points(int n){
     }
 }
 
+void print_node(tree_node *node){
+  if(strcmp(node->name, "Id") == 0 || strcmp(node->name, "ChrLit") == 0 || strcmp(node->name, "RealLit") == 0 || strcmp(node->name, "IntLit") == 0){
+      print_terminal(node);
+  } else {
+      //printf("%s\tline: %d\tcol: %d\n", node->name,node->line,node->col);
+      printf("%s\n", node->name);
+  }
+}
+
 void print_tree(tree_node* node, int level){
     if(node != NULL) {
         print_points(level);
-        if(strcmp(node->name, "Id") == 0 || strcmp(node->name, "ChrLit") == 0 || strcmp(node->name, "RealLit") == 0 || strcmp(node->name, "IntLit") == 0){
-            print_terminal(node);
-        } else {
-            //printf("%s\tline: %d\tcol: %d\n", node->name,node->line,node->col);
-            printf("%s\n", node->name);
-        }
-
+        print_node(node);
         tree_node* child = node->son;
 
         if(child != NULL){
