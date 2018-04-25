@@ -1,11 +1,10 @@
 int main(void) {
-	char i = 'A';
-	double a = 0.2;
-	short b = 1;
-	int po = 2;
-	while (i <= 'Z') {
-		putchar(i);
-		i = i + 1;
-	}
+	char i;
+	char b;
+	int c;
+	i = 'A';
+	main() = 'B';
+	c = b && i;
+
 	return 0;
 }

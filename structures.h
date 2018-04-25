@@ -3,6 +3,8 @@
 
 #define MAX_STR 100
 
+#include "y.tab.h"
+
 typedef struct sym_table{
   char node_type[MAX_STR]; //node_type
   char id[MAX_STR];//id
@@ -27,6 +29,7 @@ typedef struct _tree_node {
     int an_n_params;
     sym_table **an_params;
     int line,col;//for location purposes when printing errors
+    YYLTYPE loc;
 } tree_node;
 
 

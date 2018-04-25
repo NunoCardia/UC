@@ -67,8 +67,8 @@ void add_brother(tree_node* brother, tree_node* new_son) {
 
 /* PRINTING */
 void print_terminal(tree_node* node){
-    //printf("%s(%s)\tline: %d\tcol: %d\n", node->name, node->value,node->line,node->col);
-    printf("%s(%s)\n", node->name, node->value);
+    printf("%s(%s)\tline: %d\tcol: %d\n", node->name, node->value,node->line,node->col);
+    //printf("%s(%s)\n", node->name, node->value);
 }
 
 void print_points(int n){

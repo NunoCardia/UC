@@ -521,7 +521,7 @@ ExprSpecial:    ExprSpecial ASSIGN ExprSpecial                                  
                                                                                   $$ = create_simple_node("Plus", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$2);
                                                                                 }
-        |       ID                                                              { $$ = create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)));}
+        |       ID                                                              { $$ = create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)-2));}
         |       INTLIT                                                          { $$ = create_value_node("IntLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
         |       CHRLIT                                                          { $$ = create_value_node("ChrLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
         |       REALLIT                                                         { $$ = create_value_node("RealLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
@@ -529,7 +529,7 @@ ExprSpecial:    ExprSpecial ASSIGN ExprSpecial                                  
         |       LPAR error RPAR                                                 {$$ = NULL;}
         |       ID LPAR ZUExprZMComma RPAR                                      {
                                                                                   $$ = create_simple_node("Call", yylineno, (int)(columnNumber - strlen($1)));
-                                                                                  add_child($$, create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1))));
+                                                                                  add_child($$, create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)-2)));
                                                                                   add_brother($$->son,$3);
                                                                                 }
         |       ID LPAR error RPAR                                              {$$ = NULL;}

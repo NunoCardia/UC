@@ -1,5 +1,8 @@
 #include "semantics.h"
 
+//TODO convert name to symbols in error statements
+//TODO got YYLTYPE to work BUT NEEDS TO BE CHANGED
+
 void print_an_node(tree_node* n, int an) {
   if (!an) {
 
@@ -127,13 +130,13 @@ void conflicting_types(tree_node *node1, tree_node *node2) {
 
 
 
-sym_table *is_function(sym_table *st, tree_node *node, char *function_name) {
+sym_table *is_function(sym_table *st, tree_node *node, char function_name[MAX_STR]) {
   sym_table *cur_st_node = st;
 
   if (strcmp(node->value,"")==0) {
     return NULL;
   }
-  if (function_name != NULL) {
+  if (strcmp(function_name,"")!=0) {
     while (cur_st_node != NULL) {
       if (!strcmp(cur_st_node->id, function_name) && strcmp(cur_st_node->node_type,"FUNC_DECLARATION")==0) {
         if (cur_st_node->definition == NULL) break;
@@ -990,17 +993,108 @@ void parse_plus_minus(tree_node *node, sym_table *st, char function_name[MAX_STR
   }
 }
 
-void parse_bitwise_or(tree_node *node, sym_table *st, char function_name[MAX_STR]){
-  return;
+void parse_bitwise_and_or_xor(tree_node *node, sym_table *st, char function_name[MAX_STR]){
+  tree_node *t1,*t2;
+  t1 = return_tree_node(node,0);
+  t2 = return_tree_node(node,1);
+  sym_table *func_node1 = is_function(st, t1, function_name);
+  sym_table *func_node2 = is_function(st, t2, function_name);
+
+  strcpy(node->an_type,"int");
+
+
+  int first_void = strcmp(t1->an_type,"void")==0 && func_node1 == NULL;
+  int second_void = strcmp(t1->an_type,"void")==0 && func_node2 == NULL;
+
+  if (first_void && second_void) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types void, void\n", node->line, node->col, node->value);
+    return;
+  } else if (first_void && !second_void) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types void, ", node->line, node->col, node->value);
+
+    if (func_node2 != NULL) {
+      print_function_type(func_node2);
+    } else {
+      printf("%s",t2->an_type);
+    }
+
+    printf("\n");
+
+    return;
+  } else if (!first_void && second_void) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->line, node->col, node->value);
+
+    if (func_node1 != NULL) {
+      print_function_type(func_node1);
+    } else {
+      printf("%s",t1->an_type);
+    }
+
+    printf(", void\n");
+    return;
+  }
+
+  if (func_node1 && !func_node2) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->line, node->col, node->value);
+    print_function_type(func_node1);
+    printf(", ");
+    printf("%s\n",t2->an_type);
+    printf("\n");
+
+    strcpy(node->an_type,"int");;
+
+    return;
+  } else if (!func_node1 && func_node2) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->line, node->col, node->value);
+    printf("%s",t1->an_type);
+    printf(", ");
+    print_function_type(func_node2);
+    printf("\n");
+
+    strcpy(node->an_type,"int");;
+
+    return;
+  } else if (func_node1 && func_node2) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ",node->line, node->col, node->value);
+    print_function_type(func_node1);
+    printf(", ");
+    print_function_type(func_node2);
+    printf("\n");
+
+    strcpy(node->an_type,"int");;
+
+    return;
+  }
+
+  int first_undef = (strcmp(t1->an_type,"undef")==0) ? 1 : 0;
+  int second_undef = (strcmp(t2->an_type,"undef")==0) ? 1 : 0;
+
+  if (first_undef && !second_undef) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->line, node->col, node->value);
+    printf("undef");
+    printf(", ");
+    printf("%s\n",t2->an_type);
+  } else if (!first_undef && second_undef) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ",node->line, node->col, node->value);
+    printf("%s",t1->an_type);
+    printf(", ");
+    printf("undef");
+    printf("\n");
+
+    return;
+  } else if (first_undef && second_undef) {
+    printf("Line %d, col %d: Operator %s cannot be applied to types ",node->line, node->col, node->value);
+    printf("undef");
+    printf(", ");
+    printf("undef");
+    printf("\n");
+
+    return;
+  }
+
+  strcpy(node->an_type,"int");
 }
 
-void parse_bitwise_and(tree_node *node, sym_table *st, char function_name[MAX_STR]){
-  return;
-}
-
-void parse_bitwise_xor(tree_node *node, sym_table *st, char function_name[MAX_STR]){
-  return;
-}
 
 void parse_not(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   tree_node *t1 = return_tree_node(node,0);
@@ -1034,8 +1128,7 @@ void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   t2 = return_tree_node(node,1);
   sym_table *func_node = is_function(st, t2, function_name);
 
-  int id_found = strcmp(t1->name,"Id")==0 ||
-                 (strcmp(t1->an_type,"undef")!=0 && strcmp(t1->an_type,"UNKNOWN")!=0);
+  int id_found = strcmp(t1->name,"Id")==0 ? 1 : 0;
 
   strcpy(node->an_type,t1->an_type);
 
@@ -1084,7 +1177,7 @@ void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   }
 
   if (error) {
-    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->line, node->col, node->value);
+    printf("Line %d, col %d: Operator %s cannot be applied to types ", node->son->line, node->son->col, node->value);
     printf("%s",t1->an_type);
     printf(", ");
     printf("%s\n",t2->an_type);
@@ -1275,14 +1368,8 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
   else if(strcmp(node->name,"Not")==0){
     parse_not(node,st,function_name);
   }
-  else if(strcmp(node->name,"BitWiseAnd")==0){
-    parse_bitwise_and(node,st,function_name);
-  }
-  else if(strcmp(node->name,"BitWiseOr")==0){
-    parse_bitwise_or(node,st,function_name);
-  }
-  else if(strcmp(node->name,"BitWiseXor")==0){
-    parse_bitwise_xor(node,st,function_name);
+  else if(strcmp(node->name,"BitWiseAnd")==0 || strcmp(node->name,"BitWiseOr")==0  || strcmp(node->name,"BitWiseXor")==0){
+    parse_bitwise_and_or_xor(node,st,function_name);
   }
   else if(strcmp(node->name,"Store")==0){
     parse_store(node,st,function_name);
