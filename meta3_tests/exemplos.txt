@@ -1,3 +1,10 @@
-Árvores Anotadas ????????????????????
-
-int error(int a); é suposto aparecer o a na tabela de simbolos??
+double + char = double
+short + char = int
+char + char = int
+int + char = int
+int + int = int
+double + int = double
+int + short = int
+double + double = double
+double + short = double
+short + short = int
