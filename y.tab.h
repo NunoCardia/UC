@@ -130,7 +130,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 95 "uccompiler.y" /* yacc.c:1915  */
+#line 96 "uccompiler.y" /* yacc.c:1915  */
 
     char*   id;
     char*   intlit;

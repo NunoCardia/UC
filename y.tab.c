@@ -208,7 +208,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 95 "uccompiler.y" /* yacc.c:355  */
+#line 96 "uccompiler.y" /* yacc.c:355  */
 
     char*   id;
     char*   intlit;
@@ -550,15 +550,15 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   122,   122,   130,   138,   148,   149,   155,   161,   170,
-     179,   187,   194,   202,   211,   217,   221,   229,   236,   240,
-     244,   260,   266,   267,   268,   269,   270,   274,   288,   289,
-     292,   293,   300,   301,   304,   305,   306,   307,   308,   309,
-     324,   343,   358,   370,   405,   406,   419,   420,   427,   432,
-     437,   442,   447,   452,   457,   462,   467,   472,   477,   482,
-     487,   492,   497,   502,   507,   512,   516,   520,   524,   525,
-     526,   527,   528,   529,   530,   535,   538,   539,   545,   546,
-     552,   553,   556,   557,   561
+       0,   123,   123,   131,   139,   149,   150,   156,   162,   171,
+     180,   188,   195,   203,   212,   218,   222,   230,   237,   241,
+     245,   261,   267,   268,   269,   270,   271,   275,   289,   290,
+     293,   294,   301,   302,   305,   306,   307,   308,   309,   310,
+     325,   344,   359,   371,   406,   407,   420,   421,   428,   433,
+     438,   443,   448,   453,   458,   463,   468,   473,   478,   483,
+     488,   493,   498,   503,   508,   513,   517,   521,   525,   526,
+     527,   528,   529,   530,   531,   536,   539,   540,   546,   547,
+     553,   554,   557,   558,   562
 };
 #endif
 
@@ -1589,7 +1589,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 122 "uccompiler.y" /* yacc.c:1661  */
+#line 123 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("Program",yylineno,(int)(columnNumber));
                                                                                     root = (yyval.node);
@@ -1602,7 +1602,7 @@ yyreduce:
     break;
 
   case 3:
-#line 130 "uccompiler.y" /* yacc.c:1661  */
+#line 131 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("Program", yylineno, (int)(columnNumber));
                                                                                     root = (yyval.node);
@@ -1615,7 +1615,7 @@ yyreduce:
     break;
 
   case 4:
-#line 138 "uccompiler.y" /* yacc.c:1661  */
+#line 139 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("Program", yylineno, (int)(columnNumber));
                                                                                     root = (yyval.node);
@@ -1628,13 +1628,13 @@ yyreduce:
     break;
 
   case 5:
-#line 148 "uccompiler.y" /* yacc.c:1661  */
+#line 149 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1634 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 149 "uccompiler.y" /* yacc.c:1661  */
+#line 150 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   if((yyvsp[-1].node) != NULL) {
@@ -1645,7 +1645,7 @@ yyreduce:
     break;
 
   case 7:
-#line 155 "uccompiler.y" /* yacc.c:1661  */
+#line 156 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   if((yyvsp[-1].node) != NULL) {
@@ -1656,7 +1656,7 @@ yyreduce:
     break;
 
   case 8:
-#line 161 "uccompiler.y" /* yacc.c:1661  */
+#line 162 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   if((yyvsp[-1].node) != NULL) {
@@ -1667,7 +1667,7 @@ yyreduce:
     break;
 
   case 9:
-#line 170 "uccompiler.y" /* yacc.c:1661  */
+#line 171 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("FuncDefinition", yylineno, (int)(columnNumber));
                                                                                     add_child((yyval.node), (yyvsp[-2].node));
@@ -1678,7 +1678,7 @@ yyreduce:
     break;
 
   case 10:
-#line 179 "uccompiler.y" /* yacc.c:1661  */
+#line 180 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("FuncDeclaration", yylineno, (int)(columnNumber));
                                                                                     add_child((yyval.node), (yyvsp[-2].node));
@@ -1688,7 +1688,7 @@ yyreduce:
     break;
 
   case 11:
-#line 187 "uccompiler.y" /* yacc.c:1661  */
+#line 188 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_value_node("Id", (yyvsp[-3].id), yylineno, (int)((yyvsp[-1].node)->col - strlen((yyvsp[-3].id))));
                                                                                   add_brother((yyval.node), (yyvsp[-1].node));
@@ -1697,7 +1697,7 @@ yyreduce:
     break;
 
   case 12:
-#line 194 "uccompiler.y" /* yacc.c:1661  */
+#line 195 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("FuncBody", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-1].node) != NULL){
@@ -1708,7 +1708,7 @@ yyreduce:
     break;
 
   case 13:
-#line 202 "uccompiler.y" /* yacc.c:1661  */
+#line 203 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   if((yyvsp[-1].node) != NULL) {
@@ -1722,7 +1722,7 @@ yyreduce:
     break;
 
   case 14:
-#line 211 "uccompiler.y" /* yacc.c:1661  */
+#line 212 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   if((yyvsp[-1].node) != NULL) {
@@ -1733,13 +1733,13 @@ yyreduce:
     break;
 
   case 15:
-#line 217 "uccompiler.y" /* yacc.c:1661  */
+#line 218 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1739 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 16:
-#line 221 "uccompiler.y" /* yacc.c:1661  */
+#line 222 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("ParamList", yylineno, (int)((yyvsp[-1].node)->col - 1));
                                                                                     add_child((yyval.node),(yyvsp[-1].node));
@@ -1749,7 +1749,7 @@ yyreduce:
     break;
 
   case 17:
-#line 229 "uccompiler.y" /* yacc.c:1661  */
+#line 230 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("ParamDeclaration", yylineno, (int)(columnNumber - (columnNumber - (yyvsp[-1].node)->col)));
                                                                                     add_child((yyval.node),(yyvsp[-1].node));
@@ -1759,7 +1759,7 @@ yyreduce:
     break;
 
   case 18:
-#line 236 "uccompiler.y" /* yacc.c:1661  */
+#line 237 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   add_brother((yyvsp[-1].node),(yyvsp[0].node));
@@ -1768,13 +1768,13 @@ yyreduce:
     break;
 
   case 19:
-#line 240 "uccompiler.y" /* yacc.c:1661  */
+#line 241 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1774 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 20:
-#line 244 "uccompiler.y" /* yacc.c:1661  */
+#line 245 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                       (yyval.node) = (yyvsp[-2].node);
                                                                                       if((yyvsp[-1].node) != NULL) {
@@ -1795,43 +1795,43 @@ yyreduce:
     break;
 
   case 21:
-#line 260 "uccompiler.y" /* yacc.c:1661  */
+#line 261 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 1801 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 22:
-#line 266 "uccompiler.y" /* yacc.c:1661  */
+#line 267 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_simple_node("Int", yylineno, (int)(columnNumber - 3));}
 #line 1807 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 23:
-#line 267 "uccompiler.y" /* yacc.c:1661  */
+#line 268 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_simple_node("Char", yylineno, (int)(columnNumber - 4));}
 #line 1813 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 24:
-#line 268 "uccompiler.y" /* yacc.c:1661  */
+#line 269 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_simple_node("Void", yylineno, (int)(columnNumber - 4));}
 #line 1819 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 25:
-#line 269 "uccompiler.y" /* yacc.c:1661  */
+#line 270 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_simple_node("Short", yylineno, (int)(columnNumber - 5));}
 #line 1825 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 26:
-#line 270 "uccompiler.y" /* yacc.c:1661  */
+#line 271 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_simple_node("Double", yylineno, (int)(columnNumber - 6));}
 #line 1831 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 27:
-#line 274 "uccompiler.y" /* yacc.c:1661  */
+#line 275 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Declaration", yylineno, (int)(columnNumber));
                                                                                   auxId = create_value_node("Id",(yyvsp[-1].id), yylineno, (int)(columnNumber - strlen((yyvsp[-1].id)) - 1));
@@ -1848,25 +1848,25 @@ yyreduce:
     break;
 
   case 28:
-#line 288 "uccompiler.y" /* yacc.c:1661  */
+#line 289 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1854 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 29:
-#line 289 "uccompiler.y" /* yacc.c:1661  */
+#line 290 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1860 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 30:
-#line 292 "uccompiler.y" /* yacc.c:1661  */
+#line 293 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1866 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 31:
-#line 293 "uccompiler.y" /* yacc.c:1661  */
+#line 294 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   add_brother((yyvsp[-1].node), (yyvsp[0].node));
@@ -1875,49 +1875,49 @@ yyreduce:
     break;
 
   case 32:
-#line 300 "uccompiler.y" /* yacc.c:1661  */
+#line 301 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 1881 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 33:
-#line 301 "uccompiler.y" /* yacc.c:1661  */
+#line 302 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 1887 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 34:
-#line 304 "uccompiler.y" /* yacc.c:1661  */
+#line 305 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[-1].node);}
 #line 1893 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 35:
-#line 305 "uccompiler.y" /* yacc.c:1661  */
+#line 306 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[-1].node);}
 #line 1899 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 36:
-#line 306 "uccompiler.y" /* yacc.c:1661  */
+#line 307 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[-1].node);}
 #line 1905 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 37:
-#line 307 "uccompiler.y" /* yacc.c:1661  */
+#line 308 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 1911 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 38:
-#line 308 "uccompiler.y" /* yacc.c:1661  */
+#line 309 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 1917 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 39:
-#line 309 "uccompiler.y" /* yacc.c:1661  */
+#line 310 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                       if((yyvsp[-2].node) != NULL) {
                                                                                           (yyval.node) = create_simple_node("If", yylineno, (int)(columnNumber));
@@ -1937,7 +1937,7 @@ yyreduce:
     break;
 
   case 40:
-#line 324 "uccompiler.y" /* yacc.c:1661  */
+#line 325 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     if( (yyvsp[-4].node) != NULL ) {
                                                                                         (yyval.node) = create_simple_node("If", yylineno, (int)(columnNumber));
@@ -1961,7 +1961,7 @@ yyreduce:
     break;
 
   case 41:
-#line 343 "uccompiler.y" /* yacc.c:1661  */
+#line 344 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("While", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-2].node) != NULL) {
@@ -1980,7 +1980,7 @@ yyreduce:
     break;
 
   case 42:
-#line 358 "uccompiler.y" /* yacc.c:1661  */
+#line 359 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     (yyval.node) = create_simple_node("Return", yylineno, (int)(columnNumber));
                                                                                     if((yyvsp[-1].node) == NULL){
@@ -1994,7 +1994,7 @@ yyreduce:
     break;
 
   case 43:
-#line 370 "uccompiler.y" /* yacc.c:1661  */
+#line 371 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     int stat_num = 0;
                                                                                     tree_node * stat_aux = (yyvsp[0].node);
@@ -2032,13 +2032,13 @@ yyreduce:
     break;
 
   case 44:
-#line 405 "uccompiler.y" /* yacc.c:1661  */
+#line 406 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 2038 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 45:
-#line 406 "uccompiler.y" /* yacc.c:1661  */
+#line 407 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                     if((yyvsp[-1].node) != NULL){
                                                                                         (yyval.node) = (yyvsp[-1].node);
@@ -2052,13 +2052,13 @@ yyreduce:
     break;
 
   case 46:
-#line 419 "uccompiler.y" /* yacc.c:1661  */
+#line 420 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 2058 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 47:
-#line 420 "uccompiler.y" /* yacc.c:1661  */
+#line 421 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Comma", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2068,7 +2068,7 @@ yyreduce:
     break;
 
   case 48:
-#line 427 "uccompiler.y" /* yacc.c:1661  */
+#line 428 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Store", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2078,7 +2078,7 @@ yyreduce:
     break;
 
   case 49:
-#line 432 "uccompiler.y" /* yacc.c:1661  */
+#line 433 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("And", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2088,7 +2088,7 @@ yyreduce:
     break;
 
   case 50:
-#line 437 "uccompiler.y" /* yacc.c:1661  */
+#line 438 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Or", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2098,7 +2098,7 @@ yyreduce:
     break;
 
   case 51:
-#line 442 "uccompiler.y" /* yacc.c:1661  */
+#line 443 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("BitWiseAnd", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2108,7 +2108,7 @@ yyreduce:
     break;
 
   case 52:
-#line 447 "uccompiler.y" /* yacc.c:1661  */
+#line 448 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("BitWiseOr", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2118,7 +2118,7 @@ yyreduce:
     break;
 
   case 53:
-#line 452 "uccompiler.y" /* yacc.c:1661  */
+#line 453 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("BitWiseXor", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2128,7 +2128,7 @@ yyreduce:
     break;
 
   case 54:
-#line 457 "uccompiler.y" /* yacc.c:1661  */
+#line 458 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Eq", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2138,7 +2138,7 @@ yyreduce:
     break;
 
   case 55:
-#line 462 "uccompiler.y" /* yacc.c:1661  */
+#line 463 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Ne", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2148,7 +2148,7 @@ yyreduce:
     break;
 
   case 56:
-#line 467 "uccompiler.y" /* yacc.c:1661  */
+#line 468 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Lt", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2158,7 +2158,7 @@ yyreduce:
     break;
 
   case 57:
-#line 472 "uccompiler.y" /* yacc.c:1661  */
+#line 473 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Gt", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2168,7 +2168,7 @@ yyreduce:
     break;
 
   case 58:
-#line 477 "uccompiler.y" /* yacc.c:1661  */
+#line 478 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Le", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2178,7 +2178,7 @@ yyreduce:
     break;
 
   case 59:
-#line 482 "uccompiler.y" /* yacc.c:1661  */
+#line 483 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Ge", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2188,7 +2188,7 @@ yyreduce:
     break;
 
   case 60:
-#line 487 "uccompiler.y" /* yacc.c:1661  */
+#line 488 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Add", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2198,7 +2198,7 @@ yyreduce:
     break;
 
   case 61:
-#line 492 "uccompiler.y" /* yacc.c:1661  */
+#line 493 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Sub", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2208,7 +2208,7 @@ yyreduce:
     break;
 
   case 62:
-#line 497 "uccompiler.y" /* yacc.c:1661  */
+#line 498 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Mul", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2218,7 +2218,7 @@ yyreduce:
     break;
 
   case 63:
-#line 502 "uccompiler.y" /* yacc.c:1661  */
+#line 503 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Div", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2228,7 +2228,7 @@ yyreduce:
     break;
 
   case 64:
-#line 507 "uccompiler.y" /* yacc.c:1661  */
+#line 508 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Mod", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[-2].node));
@@ -2238,7 +2238,7 @@ yyreduce:
     break;
 
   case 65:
-#line 512 "uccompiler.y" /* yacc.c:1661  */
+#line 513 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Not", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
@@ -2247,7 +2247,7 @@ yyreduce:
     break;
 
   case 66:
-#line 516 "uccompiler.y" /* yacc.c:1661  */
+#line 517 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Minus", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
@@ -2256,7 +2256,7 @@ yyreduce:
     break;
 
   case 67:
-#line 520 "uccompiler.y" /* yacc.c:1661  */
+#line 521 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Plus", yylineno, (int)(columnNumber));
                                                                                   add_child((yyval.node),(yyvsp[0].node));
@@ -2265,43 +2265,43 @@ yyreduce:
     break;
 
   case 68:
-#line 524 "uccompiler.y" /* yacc.c:1661  */
+#line 525 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_value_node("Id",(yyvsp[0].id), yylineno, (int)(columnNumber- strlen((yyvsp[0].id))-2));}
 #line 2271 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 69:
-#line 525 "uccompiler.y" /* yacc.c:1661  */
+#line 526 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_value_node("IntLit",(yyvsp[0].intlit), yylineno, (int)(columnNumber - strlen((yyvsp[0].intlit))));}
 #line 2277 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 70:
-#line 526 "uccompiler.y" /* yacc.c:1661  */
+#line 527 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_value_node("ChrLit",(yyvsp[0].chrlit), yylineno, (int)(columnNumber - strlen((yyvsp[0].chrlit))));}
 #line 2283 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 71:
-#line 527 "uccompiler.y" /* yacc.c:1661  */
+#line 528 "uccompiler.y" /* yacc.c:1661  */
     { (yyval.node) = create_value_node("RealLit",(yyvsp[0].reallit), yylineno, (int)(columnNumber - strlen((yyvsp[0].reallit))));}
 #line 2289 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 72:
-#line 528 "uccompiler.y" /* yacc.c:1661  */
+#line 529 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[-1].node);}
 #line 2295 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 73:
-#line 529 "uccompiler.y" /* yacc.c:1661  */
+#line 530 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 2301 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 74:
-#line 530 "uccompiler.y" /* yacc.c:1661  */
+#line 531 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = create_simple_node("Call", yylineno, (int)(columnNumber - strlen((yyvsp[-3].id))));
                                                                                   add_child((yyval.node), create_value_node("Id",(yyvsp[-3].id), yylineno, (int)(columnNumber- strlen((yyvsp[-3].id))-2)));
@@ -2311,19 +2311,19 @@ yyreduce:
     break;
 
   case 75:
-#line 535 "uccompiler.y" /* yacc.c:1661  */
+#line 536 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 2317 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 76:
-#line 538 "uccompiler.y" /* yacc.c:1661  */
+#line 539 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 2323 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 77:
-#line 539 "uccompiler.y" /* yacc.c:1661  */
+#line 540 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   add_brother((yyval.node),(yyvsp[0].node));
@@ -2332,13 +2332,13 @@ yyreduce:
     break;
 
   case 78:
-#line 545 "uccompiler.y" /* yacc.c:1661  */
+#line 546 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 2338 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 79:
-#line 546 "uccompiler.y" /* yacc.c:1661  */
+#line 547 "uccompiler.y" /* yacc.c:1661  */
     {
                                                                                   (yyval.node) = (yyvsp[-1].node);
                                                                                   add_brother((yyval.node),(yyvsp[0].node));
@@ -2347,31 +2347,31 @@ yyreduce:
     break;
 
   case 80:
-#line 552 "uccompiler.y" /* yacc.c:1661  */
+#line 553 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 2353 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 81:
-#line 553 "uccompiler.y" /* yacc.c:1661  */
+#line 554 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = create_value_node("Id",(yyvsp[0].id), yylineno, (int)(columnNumber - strlen((yyvsp[0].id))));}
 #line 2359 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 82:
-#line 556 "uccompiler.y" /* yacc.c:1661  */
+#line 557 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 2365 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 83:
-#line 557 "uccompiler.y" /* yacc.c:1661  */
+#line 558 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = (yyvsp[0].node);}
 #line 2371 "y.tab.c" /* yacc.c:1661  */
     break;
 
   case 84:
-#line 561 "uccompiler.y" /* yacc.c:1661  */
+#line 562 "uccompiler.y" /* yacc.c:1661  */
     {(yyval.node) = NULL;}
 #line 2377 "y.tab.c" /* yacc.c:1661  */
     break;
@@ -2612,7 +2612,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 564 "uccompiler.y" /* yacc.c:1906  */
+#line 565 "uccompiler.y" /* yacc.c:1906  */
 
 
 /* A função main() está do lado do lex */

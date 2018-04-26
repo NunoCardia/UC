@@ -58,6 +58,7 @@
 %token SHORT
 %token DOUBLE
 %token WHILE
+%locations
 
 %token <id> ID
 %token <intlit> INTLIT

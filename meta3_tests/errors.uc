@@ -1,9 +1,10 @@
-int f;
+int f=0;
 
-int main(int f, int a2) {
-	int f1,f2;
-	char i;
-	f1 == f2;
-	i = 'A';
+int main(void) {
+	char i = 'A'&'B';
+	while (i <= 'Z') {
+		putchar(i);
+		i = i + 1;
+	}
 	return 0;
 }

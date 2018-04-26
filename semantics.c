@@ -1283,7 +1283,7 @@ void parse_while(tree_node *node, sym_table *st, char function_name[MAX_STR]){
 void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int is_anotated,int error){
   int i=0,childs = 0;
   tree_node *t1 = NULL;
-  if(strcmp(node->name,"FuncDeclaration")==0 || strcmp(node->name,"Declaration")==0){
+  if(strcmp(node->name,"FuncDeclaration")==0){
     is_anotated = 0;
   }
   if(strcmp(node->name,"FuncDefinition")==0){
@@ -1310,6 +1310,7 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     parse_return_node(st,node,function_name);
   }
   else if(strcmp(node->name,"Declaration")==0){
+    is_anotated = 0;
     if(error == 0){
       parse_declaration(st,node,function_name);
     }
@@ -1339,7 +1340,18 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     }
   }
   else if(strcmp(node->name,"Id")==0){
-    parse_id(node,st,function_name,is_anotated);
+    if(node->father!=NULL){
+      if(strcmp(node->father->name,"Declaration")==0){
+        is_anotated = 0;
+        parse_id(node,st,function_name,is_anotated);
+      }
+      else{
+        parse_id(node,st,function_name,is_anotated);
+      }
+    }
+    else{
+      parse_id(node,st,function_name,is_anotated);
+    }
   }
   else if(strcmp(node->name,"Add")==0){
     parse_add(node,st,function_name);
@@ -1375,6 +1387,11 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     parse_store(node,st,function_name);
   }
   else if(strcmp(node->name,"Call")==0){
+    if(node->father!=NULL){
+      if(strcmp(node->father->name,"Declaration")==0){
+        is_anotated = 1;
+      }
+    }
     parse_call(node,st,function_name,is_anotated);
   }
   else if(strcmp(node->name,"If")==0){
