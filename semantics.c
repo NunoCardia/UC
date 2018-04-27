@@ -1336,7 +1336,7 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
   }
   else if(strcmp(node->name,"RealLit")==0){
     if(is_anotated == 1){
-      strcpy(node->an_type,"double"); //????? ask prof se aparecer um RealLit como é que fica na an_tree
+      strcpy(node->an_type,"double");
     }
   }
   else if(strcmp(node->name,"Id")==0){
