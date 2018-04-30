@@ -175,6 +175,7 @@ sym_table *is_function(sym_table *st, tree_node *node, char function_name[MAX_ST
 }
 
 int parse_func_definition(sym_table *st,tree_node *node){
+  printf("in func_definition\n");
   sym_table *table_node = create_func_table_node(node);
   tree_node *t1 = NULL;
   sym_table *cur_st_node = st;
@@ -201,7 +202,6 @@ int parse_func_definition(sym_table *st,tree_node *node){
     }
     cur_st_node = cur_st_node->next;
   }
-
   sym_table *temp = last;
   if (declaration_node == NULL) {
     declaration_node = create_node("FUNC_DECLARATION", table_node->id, table_node->type);
@@ -222,7 +222,7 @@ int parse_func_definition(sym_table *st,tree_node *node){
     last = temp;
     temp->next = NULL;
   }
-
+  printf("end function definition\n");
   return error_given;
 }
 
@@ -422,6 +422,7 @@ void parse_declaration(sym_table *st,tree_node *node,char function_name[MAX_STR]
 }
 
 void parse_id(tree_node *node, sym_table *st, char function_name[MAX_STR], int is_anotated){
+  printf("VALUE %s\n",node->value);
   if (!is_anotated) { // todo: check for duplicate but not annotate
     return;
   }
@@ -467,6 +468,7 @@ void parse_id(tree_node *node, sym_table *st, char function_name[MAX_STR], int i
             strcpy(param->type,cur_st_node->params[i]->type);
             node->an_params[i] = param;
           }
+          printf("exiting\n");
           return;
         }
       }
@@ -1152,6 +1154,7 @@ void parse_not(tree_node *node, sym_table *st, char function_name[MAX_STR]){
 }
 
 void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
+  printf("in store\n");
   tree_node *t1,*t2;
   t1 = return_tree_node(node,0);
   t2 = return_tree_node(node,1);
@@ -1213,9 +1216,11 @@ void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   } else {
     strcpy(node->an_type,t1->an_type);
   }
+  printf("after store\n");
 }
 
 void parse_call(tree_node *node, sym_table *st, char function_name[MAX_STR],int is_anotated){
+  printf("before call\n");
   tree_node *t1;
   t1 = return_tree_node(node,0);
   if (is_anotated) {
@@ -1265,6 +1270,7 @@ void parse_call(tree_node *node, sym_table *st, char function_name[MAX_STR],int 
       continue;
     }
   }
+  printf("after call\n");
 }
 
 void parse_if(tree_node *node, sym_table *st, char function_name[MAX_STR]){
