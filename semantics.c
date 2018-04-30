@@ -563,7 +563,9 @@ void parse_add(tree_node *node, sym_table *st, char function_name[MAX_STR]){
       strcpy(node->an_type,"int");
     } else if (strcmp(t1->an_type,"void")==0) {
       operator_applied2(node, t1, t2);
-    } else {
+    } else if(strcmp(t1->an_type,"short")==0) {
+      strcpy(node->an_type,"int");
+    }else {
       strcpy(node->an_type,t1->an_type);
     }
   } else {
@@ -577,6 +579,20 @@ void parse_add(tree_node *node, sym_table *st, char function_name[MAX_STR]){
         strcpy(t2->an_type,"int");
       }
       strcpy(node->an_type,"int");
+    }
+
+    if(strcmp(t1->an_type,"double")==0 || strcmp(t2->an_type,"double")==0){
+          strcpy(node->an_type,"double");
+    }
+
+    if((strcmp(t1->an_type,"short")==0 && strcmp(t2->an_type,"int")==0) ||
+        (strcmp(t1->an_type,"int")==0 && strcmp(t2->an_type,"short")==0)){
+          strcpy(node->an_type,"int");
+    }
+
+    if((strcmp(t1->an_type,"short")==0 && strcmp(t2->an_type,"char")==0) ||
+        (strcmp(t1->an_type,"char")==0 && strcmp(t2->an_type,"short")==0)){
+          strcpy(node->an_type,"int");
     }
   }
 }
@@ -643,7 +659,13 @@ void parse_sub(tree_node *node, sym_table *st, char function_name[MAX_STR]){
     printf("\n");
     return;
   }
-  strcpy(node->an_type,"int");
+  if(strcmp(t1->an_type,"double")==0 || strcmp(t2->an_type,"double")==0){
+        strcpy(node->an_type,"double");
+  }
+  else{
+      strcpy(node->an_type,"int");
+  }
+
 }
 
 void parse_comma(tree_node *node, sym_table *st, char function_name[MAX_STR]){
@@ -743,8 +765,15 @@ void parse_mul_div_mod(tree_node *node, sym_table *st, char function_name[MAX_ST
   if (strcmp(t1->an_type,"void")==0 || strcmp(t2->an_type,"void")==0) { // first is void or second is void
     operator_applied2(node, t1, t2);
   } else {
-    strcpy(node->an_type,"int");
+    if(strcmp(t1->an_type,"double")==0 || strcmp(t2->an_type,"double")==0){
+          strcpy(node->an_type,"double");
+    }
+    else{
+        strcpy(node->an_type,"int");
+    }
   }
+
+
 }
 
 void parse_eq_ne(tree_node *node, sym_table *st, char function_name[MAX_STR]){
