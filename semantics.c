@@ -121,12 +121,6 @@ void operator_applied1_function(tree_node *operator, sym_table *decl_node) {
   printf("\n");
 }
 
-void conflicting_types(tree_node *node1, tree_node *node2) {
-  printf("Line %d, col %d: Conflicting types (got ", node1->line, node2->col);
-  printf("%s",node1->an_type);
-  printf(", expected ");
-  printf("%s)\n",node2->an_type);
-}
 
 
 
@@ -175,7 +169,6 @@ sym_table *is_function(sym_table *st, tree_node *node, char function_name[MAX_ST
 }
 
 int parse_func_definition(sym_table *st,tree_node *node){
-  printf("in func_definition\n");
   sym_table *table_node = create_func_table_node(node);
   tree_node *t1 = NULL;
   sym_table *cur_st_node = st;
@@ -222,12 +215,11 @@ int parse_func_definition(sym_table *st,tree_node *node){
     last = temp;
     temp->next = NULL;
   }
-  printf("end function definition\n");
   return error_given;
 }
 
 void parse_return_node(sym_table *st,tree_node *node, char function_name[MAX_STR]){
-  int i=0;
+  int i;
   char type[MAX_STR];
   strcpy(type,"UNKNOWN");
   sym_table *return_st = st;
@@ -422,7 +414,6 @@ void parse_declaration(sym_table *st,tree_node *node,char function_name[MAX_STR]
 }
 
 void parse_id(tree_node *node, sym_table *st, char function_name[MAX_STR], int is_anotated){
-  printf("VALUE %s\n",node->value);
   if (!is_anotated) { // todo: check for duplicate but not annotate
     return;
   }
@@ -468,7 +459,6 @@ void parse_id(tree_node *node, sym_table *st, char function_name[MAX_STR], int i
             strcpy(param->type,cur_st_node->params[i]->type);
             node->an_params[i] = param;
           }
-          printf("exiting\n");
           return;
         }
       }
@@ -562,11 +552,11 @@ void parse_add(tree_node *node, sym_table *st, char function_name[MAX_STR]){
 
   if (strcmp(t1->an_type,t2->an_type)==0) {
     if (strcmp(t1->an_type,"char")==0) { // both are chars
-      strcpy(node->an_type,"int");
+      strcpy(node->an_type,"char");
     } else if (strcmp(t1->an_type,"void")==0) {
       operator_applied2(node, t1, t2);
     } else if(strcmp(t1->an_type,"short")==0) {
-      strcpy(node->an_type,"int");
+      strcpy(node->an_type,"short");
     }else {
       strcpy(node->an_type,t1->an_type);
     }
@@ -594,7 +584,10 @@ void parse_add(tree_node *node, sym_table *st, char function_name[MAX_STR]){
 
     if((strcmp(t1->an_type,"short")==0 && strcmp(t2->an_type,"char")==0) ||
         (strcmp(t1->an_type,"char")==0 && strcmp(t2->an_type,"short")==0)){
-          strcpy(node->an_type,"int");
+          strcpy(node->an_type,"short");
+    }
+    if((strcmp(t1->an_type,"char")==0 && strcmp(t2->an_type,"char")==0)){
+          strcpy(node->an_type,"char");
     }
   }
 }
@@ -663,6 +656,13 @@ void parse_sub(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   }
   if(strcmp(t1->an_type,"double")==0 || strcmp(t2->an_type,"double")==0){
         strcpy(node->an_type,"double");
+  }
+  else if((strcmp(t1->an_type,"short")==0 && strcmp(t2->an_type,"char")==0) ||
+      (strcmp(t1->an_type,"char")==0 && strcmp(t2->an_type,"short")==0)){
+        strcpy(node->an_type,"short");
+  }
+  else if(strcmp(t1->an_type,t2->an_type)==0){
+    strcpy(node->an_type,t1->an_type);
   }
   else{
       strcpy(node->an_type,"int");
@@ -764,11 +764,20 @@ void parse_mul_div_mod(tree_node *node, sym_table *st, char function_name[MAX_ST
     return;
   }
 
+
+
   if (strcmp(t1->an_type,"void")==0 || strcmp(t2->an_type,"void")==0) { // first is void or second is void
     operator_applied2(node, t1, t2);
   } else {
     if(strcmp(t1->an_type,"double")==0 || strcmp(t2->an_type,"double")==0){
           strcpy(node->an_type,"double");
+    }
+    else if((strcmp(t1->an_type,"short")==0 && strcmp(t2->an_type,"char")==0) ||
+        (strcmp(t1->an_type,"char")==0 && strcmp(t2->an_type,"short")==0)){
+          strcpy(node->an_type,"short");
+    }
+    else if(strcmp(t1->an_type,t2->an_type)==0){
+      strcpy(node->an_type,t1->an_type);
     }
     else{
         strcpy(node->an_type,"int");
@@ -1154,7 +1163,6 @@ void parse_not(tree_node *node, sym_table *st, char function_name[MAX_STR]){
 }
 
 void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
-  printf("in store\n");
   tree_node *t1,*t2;
   t1 = return_tree_node(node,0);
   t2 = return_tree_node(node,1);
@@ -1216,11 +1224,9 @@ void parse_store(tree_node *node, sym_table *st, char function_name[MAX_STR]){
   } else {
     strcpy(node->an_type,t1->an_type);
   }
-  printf("after store\n");
 }
 
 void parse_call(tree_node *node, sym_table *st, char function_name[MAX_STR],int is_anotated){
-  printf("before call\n");
   tree_node *t1;
   t1 = return_tree_node(node,0);
   if (is_anotated) {
@@ -1270,7 +1276,6 @@ void parse_call(tree_node *node, sym_table *st, char function_name[MAX_STR],int 
       continue;
     }
   }
-  printf("after call\n");
 }
 
 void parse_if(tree_node *node, sym_table *st, char function_name[MAX_STR]){
@@ -1346,7 +1351,7 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
   }
   else if(strcmp(node->name,"Declaration")==0){
     is_anotated = 0;
-    if(error == 0){
+    if(!error){
       parse_declaration(st,node,function_name);
     }
   }
@@ -1354,8 +1359,10 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     parse_func_declaration(st,node,function_name);
   }
   else if(strcmp(node->name,"IntLit")==0 || strcmp(node->name,"ChrLit")==0){
-    if(strcmp(node->father->name,"Declaration")==0){
-      strcpy(node->an_type,"int");
+    if(node->father!= NULL){
+      if(strcmp(node->father->name,"Declaration")==0){
+        strcpy(node->an_type,"int");
+      }
     }
     if(is_anotated == 1){
       strcpy(node->an_type,"int");
@@ -1365,11 +1372,6 @@ void semantics(tree_node *node, sym_table *st, char function_name[MAX_STR], int 
     if(strcmp(node->father->name,"Declaration")==0){
       strcpy(node->an_type,"double");
     }
-    if(is_anotated == 1){
-      strcpy(node->an_type,"int");
-    }
-  }
-  else if(strcmp(node->name,"RealLit")==0){
     if(is_anotated == 1){
       strcpy(node->an_type,"double");
     }

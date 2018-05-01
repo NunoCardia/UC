@@ -1,14 +1,12 @@
 int f;
 
-int main(int a, int b) {
-	char i;
-	i = 'A';
-	getchar();
+int bac(int a, int b){
 	return 0;
 }
 
-int b(void){
+
+int ba(void){
 	int a;
-	a = main(2,0);
+	a = bac(2,5);
 	return 1;
 }

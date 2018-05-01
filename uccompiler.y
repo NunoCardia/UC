@@ -173,6 +173,7 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody                    
                                                                                     add_child($$, $1);
                                                                                     add_brother($1,$2);
                                                                                     add_brother($1,$3);
+                                                                                    $$->loc = @2;
                                                                                 }
                 ;
 
@@ -181,6 +182,7 @@ FunctionDeclaration: TypeSpec FunctionDeclarator SEMI                           
                                                                                     $$ = create_simple_node("FuncDeclaration", yylineno, (int)(columnNumber));
                                                                                     add_child($$, $1);
                                                                                     add_brother($$->son,$2);
+                                                                                    $$->loc = @2;
                                                                                 }
                 ;
 
@@ -223,6 +225,7 @@ ParameterList: ParameterDeclaration CommaParameterDeclaration                   
                                                                                     $$ = create_simple_node("ParamList", yylineno, (int)($1->col - 1));
                                                                                     add_child($$,$1);
                                                                                     add_brother($1,$2);
+                                                                                    $$->loc = @1;
                                                                                 }
             ;
 
@@ -231,12 +234,19 @@ ParameterDeclaration: TypeSpec ZUid                                             
                                                                                     $$ = create_simple_node("ParamDeclaration", yylineno, (int)(columnNumber - (columnNumber - $1->col)));
                                                                                     add_child($$,$1);
                                                                                     add_brother($1,$2);
+                                                                                    if($2 == NULL){
+                                                                                      $$->loc = @1;
+                                                                                    }
+                                                                                    else{
+                                                                                      $$->loc = @2;
+                                                                                    }
                                                                                 }
                 ;
 
 CommaParameterDeclaration:COMMA ParameterDeclaration CommaParameterDeclaration  {
                                                                                   $$ = $2;
                                                                                   add_brother($2,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
       |     Empty                                                               {$$ = $1;}
       ;
@@ -264,11 +274,11 @@ Declaration:    TypeSpec Declarator CommaDeclarator SEMI                        
 
 
 
-TypeSpec:   INT                                                                 { $$ = create_simple_node("Int", yylineno, (int)(columnNumber - 3));}
-    |       CHAR                                                                { $$ = create_simple_node("Char", yylineno, (int)(columnNumber - 4));}
-    |       VOID                                                                { $$ = create_simple_node("Void", yylineno, (int)(columnNumber - 4));}
-    |       SHORT                                                               { $$ = create_simple_node("Short", yylineno, (int)(columnNumber - 5));}
-    |       DOUBLE                                                              { $$ = create_simple_node("Double", yylineno, (int)(columnNumber - 6));}
+TypeSpec:   INT                                                                 { $$ = create_simple_node("Int", yylineno, (int)(columnNumber - 3));$$->loc = @1;}
+    |       CHAR                                                                { $$ = create_simple_node("Char", yylineno, (int)(columnNumber - 4));$$->loc = @1;}
+    |       VOID                                                                { $$ = create_simple_node("Void", yylineno, (int)(columnNumber - 4));$$->loc = @1;}
+    |       SHORT                                                               { $$ = create_simple_node("Short", yylineno, (int)(columnNumber - 5));$$->loc = @1;}
+    |       DOUBLE                                                              { $$ = create_simple_node("Double", yylineno, (int)(columnNumber - 6));$$->loc = @1;}
     ;
 
 
@@ -282,6 +292,7 @@ Declarator: ID ZUAssignExpr                                                     
                                                                                   else{
                                                                                     add_child($$,auxId);
                                                                                   }
+                                                                                  $$->loc = @1;
 
                                                                                 }
         ;
@@ -321,6 +332,7 @@ StatementSpecial:   ZUExpr SEMI                                                 
                                                                                       } else {
                                                                                           $$ = NULL;
                                                                                       }
+                                                                                      $$->loc = @3;
                                                                                 }
         |           IF LPAR Expr RPAR Statement ELSE Statement                  {
                                                                                     if( $3 != NULL ) {
@@ -340,6 +352,7 @@ StatementSpecial:   ZUExpr SEMI                                                 
                                                                                     } else {
                                                                                         $$ = NULL;
                                                                                     }
+                                                                                    $$->loc = @3;
                                                                                 }
         |           WHILE LPAR Expr RPAR Statement                              {
                                                                                     $$ = create_simple_node("While", yylineno, (int)(columnNumber));
@@ -354,15 +367,18 @@ StatementSpecial:   ZUExpr SEMI                                                 
                                                                                     }else {
                                                                                         add_brother($$->son,create_simple_node("Null", yylineno, (int)(columnNumber)));
                                                                                     }
+                                                                                    $$->loc = @3;
                                                                                 }
 
         |           RETURN ZUExpr SEMI                                          {
                                                                                     $$ = create_simple_node("Return", yylineno, (int)(columnNumber));
                                                                                     if($2 == NULL){
                                                                                         add_child($$, create_simple_node("Null", yylineno, (int)(columnNumber)));
+                                                                                        $$->loc = @1;
                                                                                     }
                                                                                     else{
                                                                                         add_child($$,$2);
+                                                                                        $$->loc = @2;
                                                                                     }
                                                                                 }
         ;
@@ -422,6 +438,7 @@ Expr:    ExprSpecial                                                            
                                                                                   $$ = create_simple_node("Comma", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($$->son,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
     ;
 
@@ -429,109 +446,130 @@ ExprSpecial:    ExprSpecial ASSIGN ExprSpecial                                  
                                                                                   $$ = create_simple_node("Store", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial AND ExprSpecial                                     {
                                                                                   $$ = create_simple_node("And", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial OR ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Or", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial BITWISEAND ExprSpecial                              {
                                                                                   $$ = create_simple_node("BitWiseAnd", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial BITWISEOR ExprSpecial                               {
                                                                                   $$ = create_simple_node("BitWiseOr", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial BITWISEXOR ExprSpecial                              {
                                                                                   $$ = create_simple_node("BitWiseXor", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial EQ ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Eq", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial NE ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Ne", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial LT ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Lt", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial GT ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Gt", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial LE ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Le", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial GE ExprSpecial                                      {
                                                                                   $$ = create_simple_node("Ge", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial PLUS ExprSpecial                                    {
                                                                                   $$ = create_simple_node("Add", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial MINUS ExprSpecial                                   {
                                                                                   $$ = create_simple_node("Sub", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial MUL ExprSpecial                                     {
                                                                                   $$ = create_simple_node("Mul", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial DIV ExprSpecial                                     {
                                                                                   $$ = create_simple_node("Div", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ExprSpecial MOD ExprSpecial                                     {
                                                                                   $$ = create_simple_node("Mod", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$1);
                                                                                   add_brother($1,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       NOT ExprSpecial                                                 {
                                                                                   $$ = create_simple_node("Not", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$2);
+                                                                                  $$->loc = @1;
                                                                                 }
         |       MINUS ExprSpecial  %prec "neg"                                  {
                                                                                   $$ = create_simple_node("Minus", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$2);
+                                                                                  $$->loc = @1;
                                                                                 }
         |       PLUS ExprSpecial  %prec "pos"                                   {
                                                                                   $$ = create_simple_node("Plus", yylineno, (int)(columnNumber));
                                                                                   add_child($$,$2);
+                                                                                  $$->loc = @1;
                                                                                 }
-        |       ID                                                              { $$ = create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)-2));}
-        |       INTLIT                                                          { $$ = create_value_node("IntLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
-        |       CHRLIT                                                          { $$ = create_value_node("ChrLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
-        |       REALLIT                                                         { $$ = create_value_node("RealLit",$1, yylineno, (int)(columnNumber - strlen($1)));}
+        |       ID                                                              { $$ = create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)-2));$$->loc = @1;}
+        |       INTLIT                                                          { $$ = create_value_node("IntLit",$1, yylineno, (int)(columnNumber - strlen($1)));$$->loc = @1;}
+        |       CHRLIT                                                          { $$ = create_value_node("ChrLit",$1, yylineno, (int)(columnNumber - strlen($1)));$$->loc = @1;}
+        |       REALLIT                                                         { $$ = create_value_node("RealLit",$1, yylineno, (int)(columnNumber - strlen($1)));$$->loc = @1;}
         |       LPAR Expr RPAR                                                  {$$ = $2;}
         |       LPAR error RPAR                                                 {$$ = NULL;}
         |       ID LPAR ZUExprZMComma RPAR                                      {
                                                                                   $$ = create_simple_node("Call", yylineno, (int)(columnNumber - strlen($1)));
                                                                                   add_child($$, create_value_node("Id",$1, yylineno, (int)(columnNumber- strlen($1)-2)));
                                                                                   add_brother($$->son,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
         |       ID LPAR error RPAR                                              {$$ = NULL;}
         ;
@@ -547,15 +585,16 @@ ZMComma:    Empty                                                               
     |       COMMA ExprSpecial ZMComma                                           {
                                                                                   $$ = $2;
                                                                                   add_brother($$,$3);
+                                                                                  $$->loc = @2;
                                                                                 }
     ;
 
 ZUid:   Empty                                                                   {$$ = NULL;}
-    |   ID                                                                      {$$ = create_value_node("Id",$1, yylineno, (int)(columnNumber - strlen($1)));}
+    |   ID                                                                      {$$ = create_value_node("Id",$1, yylineno, (int)(columnNumber - strlen($1)));$$->loc = @1;}
     ;
 
 ZUExpr: Empty                                                                   {$$ = NULL;}
-    |   Expr                                                                    {$$ = $1;}
+    |   Expr                                                                    {$$ = $1;$$->loc = @1;}
     ;
 
 

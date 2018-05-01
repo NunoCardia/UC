@@ -141,9 +141,6 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
     int should_not_insert = 0;
     tree_node *node3 = return_tree_node(param_declaration,0);
     if(n_childs(param_declaration) == 1 && strcmp(parse_type(node3->name),"void")==0){
-      if(i < declaration_node->n_params){
-        arg_mismatch = 1;
-      }
       new_node = create_node("VARIABLE","","void");
       new_node->is_parameter = 1;
       if (declaration_node_was_defined == 0) {
@@ -197,6 +194,7 @@ int add_definition(sym_table *st, sym_table *table_node, tree_node *cur_node, sy
       last_node = new_node;
     }
   }
+
   if(!error_given){
     if(arg_mismatch || declaration_node->n_params != n_childs(param_list)){
       error_given = 1;
