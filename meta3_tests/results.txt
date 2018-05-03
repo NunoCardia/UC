@@ -1,0 +1,421 @@
+Line 24, col 7: Operator % cannot be applied to to types int, double
+Line 55, col 7: Operator % cannot be applied to to types int, double
+Line 74, col 7: Operator % cannot be applied to to types double, int
+Line 80, col 7: Operator % cannot be applied to to types double, int
+Line 86, col 7: Operator % cannot be applied to to types double, double
+Line 92, col 7: Operator % cannot be applied to to types double, int
+Line 98, col 7: Operator % cannot be applied to to types double, int
+Line 116, col 7: Operator % cannot be applied to to types int, double
+Line 146, col 7: Operator % cannot be applied to to types int, double
+===== Global Symbol Table =====
+putchar	int(int)
+getchar	int(void)
+main	void(void)
+
+===== Function main Symbol Table =====
+return	void
+a	int
+b	char
+c	double
+d	int
+e	short
+
+Program
+..FuncDefinition
+....Void
+....Id(main)
+....ParamList
+......ParamDeclaration
+........Void
+....FuncBody
+......Declaration
+........Int
+........Id(a)
+......Declaration
+........Char
+........Id(b)
+......Declaration
+........Double
+........Id(c)
+......Declaration
+........Int
+........Id(d)
+......Declaration
+........Short
+........Id(e)
+......Add - int
+........Id(a) - int
+........Id(a) - int
+......Sub - int
+........Id(a) - int
+........Id(a) - int
+......Mul - int
+........Id(a) - int
+........Id(a) - int
+......Div - int
+........Id(a) - int
+........Id(a) - int
+......Mod - int
+........Id(a) - int
+........Id(a) - int
+......Add - int
+........Id(a) - int
+........Id(b) - char
+......Sub - int
+........Id(a) - int
+........Id(b) - char
+......Mul - int
+........Id(a) - int
+........Id(b) - char
+......Div - int
+........Id(a) - int
+........Id(b) - char
+......Mod - int
+........Id(a) - int
+........Id(b) - char
+......Add - double
+........Id(a) - int
+........Id(c) - double
+......Sub - double
+........Id(a) - int
+........Id(c) - double
+......Mul - double
+........Id(a) - int
+........Id(c) - double
+......Div - double
+........Id(a) - int
+........Id(c) - double
+......Mod - undef
+........Id(a) - int
+........Id(c) - double
+......Add - int
+........Id(a) - int
+........Id(d) - int
+......Sub - int
+........Id(a) - int
+........Id(d) - int
+......Mul - int
+........Id(a) - int
+........Id(d) - int
+......Div - int
+........Id(a) - int
+........Id(d) - int
+......Mod - int
+........Id(a) - int
+........Id(d) - int
+......Add - int
+........Id(a) - int
+........Id(e) - short
+......Sub - int
+........Id(a) - int
+........Id(e) - short
+......Mul - int
+........Id(a) - int
+........Id(e) - short
+......Div - int
+........Id(a) - int
+........Id(e) - short
+......Mod - int
+........Id(a) - int
+........Id(e) - short
+......Add - int
+........Id(b) - char
+........Id(a) - int
+......Sub - int
+........Id(b) - char
+........Id(a) - int
+......Mul - int
+........Id(b) - char
+........Id(a) - int
+......Div - int
+........Id(b) - char
+........Id(a) - int
+......Mod - int
+........Id(b) - char
+........Id(a) - int
+......Add - char
+........Id(b) - char
+........Id(b) - char
+......Sub - char
+........Id(b) - char
+........Id(b) - char
+......Mul - char
+........Id(b) - char
+........Id(b) - char
+......Div - char
+........Id(b) - char
+........Id(b) - char
+......Mod - int
+........Id(b) - char
+........Id(b) - char
+......Add - double
+........Id(b) - char
+........Id(c) - double
+......Sub - double
+........Id(b) - char
+........Id(c) - double
+......Mul - double
+........Id(b) - char
+........Id(c) - double
+......Div - double
+........Id(b) - char
+........Id(c) - double
+......Mod - undef
+........Id(b) - char
+........Id(c) - double
+......Add - int
+........Id(b) - char
+........Id(d) - int
+......Sub - int
+........Id(b) - char
+........Id(d) - int
+......Mul - int
+........Id(b) - char
+........Id(d) - int
+......Div - int
+........Id(b) - char
+........Id(d) - int
+......Mod - int
+........Id(b) - char
+........Id(d) - int
+......Add - short
+........Id(b) - char
+........Id(e) - short
+......Sub - short
+........Id(b) - char
+........Id(e) - short
+......Mul - short
+........Id(b) - char
+........Id(e) - short
+......Div - short
+........Id(b) - char
+........Id(e) - short
+......Mod - int
+........Id(b) - char
+........Id(e) - short
+......Add - double
+........Id(c) - double
+........Id(a) - int
+......Sub - double
+........Id(c) - double
+........Id(a) - int
+......Mul - double
+........Id(c) - double
+........Id(a) - int
+......Div - double
+........Id(c) - double
+........Id(a) - int
+......Mod - undef
+........Id(c) - double
+........Id(a) - int
+......Add - double
+........Id(c) - double
+........Id(b) - char
+......Sub - double
+........Id(c) - double
+........Id(b) - char
+......Mul - double
+........Id(c) - double
+........Id(b) - char
+......Div - double
+........Id(c) - double
+........Id(b) - char
+......Mod - undef
+........Id(c) - double
+........Id(b) - char
+......Add - double
+........Id(c) - double
+........Id(c) - double
+......Sub - double
+........Id(c) - double
+........Id(c) - double
+......Mul - double
+........Id(c) - double
+........Id(c) - double
+......Div - double
+........Id(c) - double
+........Id(c) - double
+......Mod - undef
+........Id(c) - double
+........Id(c) - double
+......Add - double
+........Id(c) - double
+........Id(d) - int
+......Sub - double
+........Id(c) - double
+........Id(d) - int
+......Mul - double
+........Id(c) - double
+........Id(d) - int
+......Div - double
+........Id(c) - double
+........Id(d) - int
+......Mod - undef
+........Id(c) - double
+........Id(d) - int
+......Add - double
+........Id(c) - double
+........Id(e) - short
+......Sub - double
+........Id(c) - double
+........Id(e) - short
+......Mul - double
+........Id(c) - double
+........Id(e) - short
+......Div - double
+........Id(c) - double
+........Id(e) - short
+......Mod - undef
+........Id(c) - double
+........Id(e) - short
+......Add - int
+........Id(d) - int
+........Id(a) - int
+......Sub - int
+........Id(d) - int
+........Id(a) - int
+......Mul - int
+........Id(d) - int
+........Id(a) - int
+......Div - int
+........Id(d) - int
+........Id(a) - int
+......Mod - int
+........Id(d) - int
+........Id(a) - int
+......Add - int
+........Id(d) - int
+........Id(b) - char
+......Sub - int
+........Id(d) - int
+........Id(b) - char
+......Mul - int
+........Id(d) - int
+........Id(b) - char
+......Div - int
+........Id(d) - int
+........Id(b) - char
+......Mod - int
+........Id(d) - int
+........Id(b) - char
+......Add - double
+........Id(d) - int
+........Id(c) - double
+......Sub - double
+........Id(d) - int
+........Id(c) - double
+......Mul - double
+........Id(d) - int
+........Id(c) - double
+......Div - double
+........Id(d) - int
+........Id(c) - double
+......Mod - undef
+........Id(d) - int
+........Id(c) - double
+......Add - int
+........Id(d) - int
+........Id(d) - int
+......Sub - int
+........Id(d) - int
+........Id(d) - int
+......Mul - int
+........Id(d) - int
+........Id(d) - int
+......Div - int
+........Id(d) - int
+........Id(d) - int
+......Mod - int
+........Id(d) - int
+........Id(d) - int
+......Add - int
+........Id(d) - int
+........Id(e) - short
+......Sub - int
+........Id(d) - int
+........Id(e) - short
+......Mul - int
+........Id(d) - int
+........Id(e) - short
+......Div - int
+........Id(d) - int
+........Id(e) - short
+......Mod - int
+........Id(d) - int
+........Id(e) - short
+......Add - int
+........Id(e) - short
+........Id(a) - int
+......Sub - int
+........Id(e) - short
+........Id(a) - int
+......Mul - int
+........Id(e) - short
+........Id(a) - int
+......Div - int
+........Id(e) - short
+........Id(a) - int
+......Mod - int
+........Id(e) - short
+........Id(a) - int
+......Add - short
+........Id(e) - short
+........Id(b) - char
+......Sub - short
+........Id(e) - short
+........Id(b) - char
+......Mul - short
+........Id(e) - short
+........Id(b) - char
+......Div - short
+........Id(e) - short
+........Id(b) - char
+......Mod - int
+........Id(e) - short
+........Id(b) - char
+......Add - double
+........Id(e) - short
+........Id(c) - double
+......Sub - double
+........Id(e) - short
+........Id(c) - double
+......Mul - double
+........Id(e) - short
+........Id(c) - double
+......Div - double
+........Id(e) - short
+........Id(c) - double
+......Mod - undef
+........Id(e) - short
+........Id(c) - double
+......Add - int
+........Id(e) - short
+........Id(d) - int
+......Sub - int
+........Id(e) - short
+........Id(d) - int
+......Mul - int
+........Id(e) - short
+........Id(d) - int
+......Div - int
+........Id(e) - short
+........Id(d) - int
+......Mod - int
+........Id(e) - short
+........Id(d) - int
+......Add - short
+........Id(e) - short
+........Id(e) - short
+......Sub - short
+........Id(e) - short
+........Id(e) - short
+......Mul - short
+........Id(e) - short
+........Id(e) - short
+......Div - short
+........Id(e) - short
+........Id(e) - short
+......Mod - int
+........Id(e) - short
+........Id(e) - short
+

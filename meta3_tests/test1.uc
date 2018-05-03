@@ -5,6 +5,15 @@ void main(void){
     int d;
     short e;
 
+    +a;
+    -a;
+    +b;
+    -b;
+    +c;
+    -c;
+    +e;
+    -e;
+
     a + a;
     a - a;
     a * a;
